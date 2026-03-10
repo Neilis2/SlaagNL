@@ -51,6 +51,17 @@ function applyLang(lang) {
   set('w-cta',      t.cta);
   set('w-note',     t.ctaNote);
 
+  // Exam type screen
+  set('et-back',      t.etBack);
+  set('et-title',     t.etTitle);
+  set('et-sub',       t.etSub);
+  set('et-mvv-name',  t.etMvvName);
+  set('et-mvv-level', t.etMvvLevel);
+  set('et-mvv-desc',  t.etMvvDesc);
+  set('et-nat-name',  t.etNatName);
+  set('et-nat-level', t.etNatLevel);
+  set('et-nat-desc',  t.etNatDesc);
+
   // Test header back button
   set('test-back', t.backTest);
 
@@ -125,6 +136,15 @@ function showScreen(id) {
 }
 
 function goToTest() {
+  showScreen('screen-exam-type');
+}
+
+function selectExamType(type) {
+  if (type === 'nat') {
+    // Coming soon — do nothing
+    return;
+  }
+  state.examType = type;
   state.currentQ = 0;
   state.answers  = [];
   showScreen('screen-test');
