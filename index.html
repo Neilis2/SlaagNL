@@ -1,972 +1,275 @@
-/* ══════════════════════════════════════
-   SLAAGNL v2 — Styles
-   Theme: Navy · Orange · Cream
-══════════════════════════════════════ */
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SlaagNL — Pass Your Inburgering Exam</title>
+<meta name="description" content="Adaptive learning in your language. Prepare for the Dutch inburgering exam with personalized exercises, level tests, and exam simulators.">
 
-:root {
-  --navy:    #0d1f3c;
-  --navy2:   #162d54;
-  --navy3:   #1e3a6e;
-  --orange:  #f47c3a;
-  --orange2: #e86a24;
-  --cream:   #fdf6ec;
-  --cream2:  #f5ead8;
-  --green:   #2ecc8a;
-  --yellow:  #f4c842;
-  --red:     #e8455a;
-  --muted:   #6b7a99;
-  --border:  #e8dfd0;
-  --white:   #ffffff;
+<!-- Open Graph (link preview on WhatsApp, iMessage, social) -->
+<meta property="og:title" content="SlaagNL 🇳🇱">
+<meta property="og:description" content="Pass your Dutch inburgering exam. Adaptive learning in Spanish, English & Arabic.">
+<meta property="og:image" content="assets/logo.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SlaagNL 🇳🇱">
+<meta name="twitter:description" content="Pass your Dutch inburgering exam. Adaptive learning in your language.">
 
-  --orange-glow: rgba(244,124,58,0.22);
-  --r-sm: 10px;
-  --r-md: 16px;
-  --r-lg: 24px;
-  --ease: 0.22s cubic-bezier(0.4,0,0.2,1);
-}
+<!-- Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇳🇱</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { -webkit-text-size-adjust:100%; }
+<!-- ══════════════════════════════
+     SCREEN: WELCOME
+══════════════════════════════ -->
+<div id="screen-welcome" class="screen active">
+  <div class="welcome-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="bg-grid"></div>
+  </div>
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--navy);
-  color: #1a1a2e;
-  min-height: 100vh;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
+  <div class="welcome-content">
 
-/* Arabic font override */
-[lang="ar"], .ar { font-family: 'Noto Sans Arabic', sans-serif; }
+    <div class="logo-row">
+      <img src="assets/logo.png" alt="SlaagNL" class="logo-img">
+      <span class="badge-beta">Beta</span>
+    </div>
 
-/* RTL support */
-body.rtl { direction: rtl; }
-body.rtl .btn-back { flex-direction: row-reverse; }
-body.rtl .stat-row { flex-direction: row-reverse; }
+    <h1 class="welcome-headline" id="w-headline">Pass your Dutch<br>integration exam</h1>
+    <p class="welcome-sub" id="w-sub">Adaptive learning that speaks your language.<br>Start free — no account needed.</p>
 
-/* ── Screens ── */
-.screen { display:none; min-height:100vh; flex-direction:column; }
-.screen.active { display:flex; animation: fadeIn .3s ease; }
+    <!-- Before / After stats -->
+    <div class="stats-card">
+      <div class="stats-col">
+        <div class="stats-label-top" id="w-before">Before</div>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="stat-num red">20K+</div>
+            <div class="stat-lbl" id="w-s1">exams/year</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num red">44%</div>
+            <div class="stat-lbl" id="w-s2">pass rate</div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-arrow">→</div>
+      <div class="stats-col">
+        <div class="stats-label-top green" id="w-after">Slaag<em>NL</em></div>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="stat-num green">3x</div>
+            <div class="stat-lbl" id="w-s3">more effective</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num green">🎯</div>
+            <div class="stat-lbl" id="w-s4">personalized</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-@keyframes fadeIn {
-  from { opacity:0; transform:translateY(10px); }
-  to   { opacity:1; transform:translateY(0); }
-}
+    <!-- Language selector -->
+    <p class="lang-label" id="w-lang-label">Choose your language</p>
+    <div class="lang-row">
+      <button class="lang-btn" id="btn-es" onclick="setLang('es')">🇪🇸 Español</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇬🇧 English</button>
+      <button class="lang-btn" id="btn-ar" onclick="setLang('ar')">🇸🇦 العربية</button>
+    </div>
 
-/* ══════════════════════════════════════
-   WELCOME
-══════════════════════════════════════ */
-#screen-welcome {
-  background: var(--navy);
-  align-items: center;
-  justify-content: center;
-  padding: 48px 24px 56px;
-  position: relative;
-  overflow: hidden;
-}
+    <button class="btn-primary" onclick="goToTest()" id="w-cta">Take the free level test →</button>
+    <p class="cta-note" id="w-note">3 minutes · No account needed</p>
 
-.welcome-bg { position:absolute; inset:0; pointer-events:none; }
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(72px);
-}
-.orb-1 {
-  width:480px; height:480px;
-  background: radial-gradient(circle, rgba(244,124,58,.18), transparent 70%);
-  top:-160px; right:-160px;
-}
-.orb-2 {
-  width:360px; height:360px;
-  background: radial-gradient(circle, rgba(46,204,138,.1), transparent 70%);
-  bottom:-100px; left:-100px;
-}
-.bg-grid {
-  position:absolute; inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.welcome-content {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-}
-
-/* Logo */
-.logo-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 28px;
-}
-.logo-flag { font-size:26px; }
-.logo-img {
-  height: 80px;
-  width: auto;
-  object-fit: contain;
-}
-.logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 34px;
-  font-weight: 900;
-  color: var(--cream);
-  font-style: normal;
-  letter-spacing: -.5px;
-}
-.logo em { color:var(--orange); font-style:normal; }
-.badge-beta {
-  background: rgba(244,124,58,.2);
-  border: 1px solid rgba(244,124,58,.35);
-  color: var(--orange);
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 3px 8px;
-  border-radius: 99px;
-  align-self: flex-start;
-  margin-top: 6px;
-}
-
-/* Headline */
-.welcome-headline {
-  font-family: 'Playfair Display', serif;
-  font-size: 34px;
-  font-weight: 900;
-  color: var(--cream);
-  line-height: 1.2;
-  margin-bottom: 12px;
-  letter-spacing: -.5px;
-}
-.welcome-sub {
-  color: rgba(253,246,236,.82);
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.65;
-  margin-bottom: 28px;
-}
-
-/* Stats before/after */
-.stats-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: var(--r-lg);
-  padding: 18px 16px;
-  margin-bottom: 28px;
-}
-.stats-col { flex:1; }
-.stats-label-top {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: rgba(253,246,236,.65);
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-.stats-label-top.green {
-  color: var(--cream);
-  font-family: 'Playfair Display', serif;
-  font-size: 13px;
-  text-transform: none;
-  letter-spacing: 0;
-}
-.stats-label-top.green em {
-  color: var(--orange);
-  font-style: normal;
-}
-.stats-arrow {
-  color: rgba(253,246,236,.5);
-  font-size: 18px;
-  flex-shrink: 0;
-}
-.stat-row {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-.stat-item { flex:1; text-align:center; }
-.stat-num {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  font-weight: 900;
-  line-height: 1;
-  margin-bottom: 3px;
-}
-.stat-num.red { color: var(--red); }
-.stat-num.green { color: var(--green); }
-.stat-lbl {
-  font-size: 10px;
-  color: rgba(253,246,236,.7);
-  text-transform: uppercase;
-  letter-spacing: .6px;
-  font-weight: 700;
-}
-.stat-divider {
-  width: 1px;
-  height: 30px;
-  background: rgba(255,255,255,.08);
-  flex-shrink: 0;
-}
-
-/* Language selector */
-.lang-label {
-  font-size: 12px;
-  color: rgba(253,246,236,.65);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-.lang-row {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-.lang-btn {
-  flex: 1;
-  background: rgba(255,255,255,.06);
-  border: 2px solid rgba(255,255,255,.1);
-  border-radius: var(--r-md);
-  padding: 10px 8px;
-  color: rgba(253,246,236,.7);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--ease);
-  font-family: 'DM Sans', sans-serif;
-}
-.lang-btn:hover, .lang-btn.selected {
-  border-color: var(--orange);
-  background: rgba(244,124,58,.12);
-  color: var(--cream);
-}
-
-/* Primary button */
-.btn-primary {
-  width: 100%;
-  background: var(--orange);
-  color: white;
-  border: none;
-  border-radius: var(--r-md);
-  padding: 17px 24px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--ease);
-  font-family: 'DM Sans', sans-serif;
-  letter-spacing: .2px;
-}
-.btn-primary:hover {
-  background: var(--orange2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(244,124,58,.35);
-}
-.btn-primary:active { transform: translateY(0); }
-
-.btn-outline {
-  background: transparent;
-  border: 2px solid rgba(255,255,255,.2);
-  color: var(--cream);
-}
-.btn-outline:hover {
-  background: rgba(255,255,255,.06);
-  border-color: rgba(255,255,255,.35);
-  box-shadow: none;
-}
-
-.cta-note {
-  margin-top: 10px;
-  font-size: 12px;
-  color: rgba(253,246,236,.3);
-}
-
-/* Back button — no background */
-.btn-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  color: rgba(253,246,236,.55);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  padding: 0;
-  transition: color var(--ease);
-  flex-shrink: 0;
-}
-.btn-back:hover { color: var(--cream); }
-
-/* On light screens */
-.light .btn-back {
-  color: var(--muted);
-}
-.light .btn-back:hover { color: var(--navy); }
-
-/* ══════════════════════════════════════
-   EXAM TYPE SCREEN
-══════════════════════════════════════ */
-#screen-exam-type {
-  background: var(--navy);
-  align-items: center;
-  justify-content: center;
-  padding: 48px 24px 56px;
-  position: relative;
-  overflow: hidden;
-}
-.exam-type-wrap {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 400px;
-}
-.exam-type-logo {
-  font-family: "Playfair Display", serif;
-  font-size: 26px;
-  font-weight: 900;
-  color: var(--cream);
-  margin-bottom: 20px;
-}
-.exam-type-logo em { color:var(--orange); font-style:normal; }
-.exam-type-title {
-  font-family: "Playfair Display", serif;
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--cream);
-  margin-bottom: 8px;
-  line-height: 1.25;
-}
-.exam-type-sub {
-  color: rgba(253,246,236,.7);
-  font-size: 15px;
-  margin-bottom: 32px;
-}
-.exam-type-cards { display:flex; flex-direction:column; gap:14px; }
-.exam-type-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: rgba(255,255,255,.06);
-  border: 2px solid rgba(255,255,255,.1);
-  border-radius: var(--r-lg);
-  padding: 20px 18px;
-  cursor: pointer;
-  transition: all var(--ease);
-  text-align: left;
-  width: 100%;
-  font-family: "DM Sans", sans-serif;
-}
-.exam-type-card:hover {
-  border-color: var(--orange);
-  background: rgba(244,124,58,.1);
-  transform: translateY(-2px);
-}
-.et-card-soon { opacity:.6; cursor:default; }
-.et-card-soon:hover { border-color:rgba(255,255,255,.1); background:rgba(255,255,255,.06); transform:none; }
-.et-icon { font-size:32px; flex-shrink:0; }
-.et-info { flex:1; }
-.et-name { font-size:16px; font-weight:700; color:var(--cream); margin-bottom:3px; }
-.et-level { font-size:11px; font-weight:600; color:var(--orange); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px; }
-.et-soon { color:var(--muted); }
-.et-desc { font-size:13px; color:rgba(253,246,236,.6); line-height:1.4; }
-.et-arrow { font-size:18px; color:rgba(253,246,236,.4); flex-shrink:0; }
+  </div>
+</div>
 
 
+<!-- ══════════════════════════════
+     SCREEN: EXAM TYPE
+══════════════════════════════ -->
+<div id="screen-exam-type" class="screen">
+  <div class="welcome-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="bg-grid"></div>
+  </div>
+  <div class="exam-type-wrap">
+    <button class="btn-back" onclick="showScreen('screen-welcome')" id="et-back">← Back</button>
+    <div class="exam-type-logo">Slaag<em>NL</em></div>
+    <h2 class="exam-type-title" id="et-title">What are you preparing for?</h2>
+    <p class="exam-type-sub" id="et-sub">The test adapts to your exam level.</p>
+    <div class="exam-type-cards">
+      <button class="exam-type-card" onclick="selectExamType('mvv')">
+        <div class="et-icon">🛂</div>
+        <div class="et-info">
+          <div class="et-name" id="et-mvv-name">MVV · Embassy exam</div>
+          <div class="et-level" id="et-mvv-level">Level A1</div>
+          <div class="et-desc" id="et-mvv-desc">For people applying from outside the Netherlands</div>
+        </div>
+        <div class="et-arrow">→</div>
+      </button>
+      <button class="exam-type-card et-card-soon" onclick="selectExamType('nat')">
+        <div class="et-icon">🏅</div>
+        <div class="et-info">
+          <div class="et-name" id="et-nat-name">Naturalization</div>
+          <div class="et-level et-soon" id="et-nat-level">Level A2 · Coming soon</div>
+          <div class="et-desc" id="et-nat-desc">For people applying for Dutch citizenship</div>
+        </div>
+        <div class="et-arrow" style="opacity:.3">→</div>
+      </button>
+    </div>
+  </div>
+</div>
 
-/* ══════════════════════════════════════
-   TEST SCREEN
-══════════════════════════════════════ */
-#screen-test { background: var(--cream); }
 
-.test-header {
-  background: var(--navy);
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: 0 2px 16px rgba(13,31,60,.3);
-}
-.test-progress-wrap {
-  flex: 1;
-  height: 5px;
-  background: rgba(255,255,255,.12);
-  border-radius: 99px;
-  overflow: hidden;
-}
-.test-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--orange), var(--yellow));
-  border-radius: 99px;
-  transition: width .5s ease;
-  width: 0%;
-}
-.test-counter {
-  color: rgba(253,246,236,.5);
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
+<!-- ══════════════════════════════
+     SCREEN: TEST
+══════════════════════════════ -->
+<div id="screen-test" class="screen">
 
-.test-body {
-  flex: 1;
-  padding: 28px 22px 48px;
-  max-width: 580px;
-  margin: 0 auto;
-  width: 100%;
-}
+  <div class="test-header">
+    <button class="btn-back" onclick="showScreen('screen-exam-type')" id="test-back">← Back</button>
+    <div class="test-progress-wrap">
+      <div class="test-progress-fill" id="test-progress"></div>
+    </div>
+    <div class="test-counter" id="test-counter">1/10</div>
+  </div>
 
-/* Question */
-.q-type-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--navy);
-  color: var(--cream);
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  padding: 4px 12px;
-  border-radius: 99px;
-  margin-bottom: 16px;
-}
-.q-topic-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--orange);
-  color: white;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  padding: 4px 12px;
-  border-radius: 99px;
-  margin-bottom: 16px;
-  margin-left: 6px;
-}
-.q-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 21px;
-  font-weight: 700;
-  color: var(--navy);
-  line-height: 1.4;
-  margin-bottom: 24px;
-}
+  <div class="test-body" id="test-body"></div>
 
-/* Options (multiple choice + true/false) */
-.q-options { display:grid; gap:10px; }
+  <!-- Answer overlay / modal -->
+  <div class="overlay" id="answer-overlay">
+    <div class="overlay-card" id="overlay-card">
+      <div class="overlay-result" id="overlay-result"></div>
+      <div class="overlay-rule" id="overlay-rule"></div>
+      <div class="overlay-exp" id="overlay-exp"></div>
+      <button class="btn-primary overlay-btn" id="overlay-next" onclick="nextQuestion()"></button>
+    </div>
+  </div>
 
-.q-option {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--white);
-  border: 2px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: all var(--ease);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  color: #1a1a2e;
-  text-align: left;
-  width: 100%;
-}
-.q-option:hover {
-  border-color: var(--orange);
-  background: var(--cream2);
-  transform: translateX(3px);
-}
-.q-option.correct {
-  border-color: var(--green);
-  background: rgba(46,204,138,.07);
-  color: #1a5e3a;
-  pointer-events: none;
-}
-.q-option.wrong {
-  border-color: var(--red);
-  background: rgba(232,69,90,.07);
-  color: #7a1a26;
-  pointer-events: none;
-}
-.q-option.disabled { pointer-events:none; opacity:.45; }
+</div>
 
-.opt-letter {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: var(--cream2);
-  display: flex; align-items:center; justify-content:center;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--muted);
-  flex-shrink: 0;
-  transition: all var(--ease);
-}
-.q-option.correct .opt-letter { background:var(--green); color:white; }
-.q-option.wrong .opt-letter   { background:var(--red);   color:white; }
 
-/* Text input (fill in the blank) */
-.fill-wrap { display:flex; flex-direction:column; gap:12px; }
+<!-- ══════════════════════════════
+     SCREEN: RESULTS
+══════════════════════════════ -->
+<div id="screen-results" class="screen">
+  <div class="results-wrap" id="results-wrap"></div>
+</div>
 
-.fill-input {
-  width: 100%;
-  border: 2px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 14px 16px;
-  font-size: 16px;
-  font-family: 'DM Sans', sans-serif;
-  color: var(--navy);
-  background: var(--white);
-  outline: none;
-  transition: border-color var(--ease), box-shadow var(--ease);
-}
-.fill-input:focus {
-  border-color: var(--orange);
-  box-shadow: 0 0 0 4px var(--orange-glow);
-}
-.fill-input.correct {
-  border-color: var(--green);
-  background: rgba(46,204,138,.06);
-}
-.fill-input.wrong {
-  border-color: var(--red);
-  background: rgba(232,69,90,.06);
-}
 
-.btn-check {
-  background: var(--navy);
-  color: var(--cream);
-  border: none;
-  border-radius: var(--r-md);
-  padding: 14px 24px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: all var(--ease);
-}
-.btn-check:hover { background:var(--navy2); transform:translateY(-1px); }
+<!-- ══════════════════════════════
+     SCREEN: SIGNUP
+══════════════════════════════ -->
+<div id="screen-signup" class="screen">
+  <div class="auth-wrap">
+    <button class="btn-back" onclick="showScreen('screen-results')" id="signup-back">← Back</button>
+    <div class="auth-logo">Slaag<em>NL</em></div>
+    <h2 class="auth-title" id="su-title">Create your free account</h2>
+    <p class="auth-sub" id="su-sub">Save your progress and get your personalized plan</p>
 
-/* ── Answer Overlay ── */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(13,31,60,.7);
-  backdrop-filter: blur(4px);
-  z-index: 100;
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 0 0 0 0;
-  animation: overlayIn .25s ease;
-}
-.overlay.show { display:flex; }
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-name">Full name</label>
+      <input class="form-input" type="text" id="su-name">
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-age">Age</label>
+      <input class="form-input" type="number" id="su-age" min="16" max="99" placeholder="e.g. 28">
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-email">Email</label>
+      <input class="form-input" type="email" id="su-email">
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-pass">Password</label>
+      <input class="form-input" type="password" id="su-pass">
+      <div class="input-hint" id="su-hint-pass">Minimum 8 characters</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-country">Country of origin</label>
+      <select class="form-input form-select" id="su-country">
+        <option value="">--</option>
+        <option value="cu">🇨🇺 Cuba</option>
+        <option value="mx">🇲🇽 Mexico</option>
+        <option value="co">🇨🇴 Colombia</option>
+        <option value="ve">🇻🇪 Venezuela</option>
+        <option value="tr">🇹🇷 Turkey</option>
+        <option value="ma">🇲🇦 Morocco</option>
+        <option value="sy">🇸🇾 Syria</option>
+        <option value="eg">🇪🇬 Egypt</option>
+        <option value="other">🌍 Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-date">Exam date (approximate)</label>
+      <input class="form-input" type="date" id="su-date">
+      <div class="input-hint" id="su-hint-date">Don't know yet? Leave blank</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-type">Type of exam</label>
+      <select class="form-input form-select" id="su-type">
+        <option value="embassy" id="su-opt-emb">Embassy (outside Netherlands)</option>
+        <option value="nl" id="su-opt-nl">Inside the Netherlands</option>
+      </select>
+    </div>
 
-@keyframes overlayIn {
-  from { opacity:0; }
-  to   { opacity:1; }
-}
+    <button class="btn-primary" onclick="handleSignup()" id="su-btn">Create account & start studying</button>
+    <p class="auth-footer"><span id="su-footer-text">Already have an account?</span> <a href="#" onclick="showScreen('screen-login')" id="su-link-login">Log in</a></p>
+    <p class="terms-note" id="su-terms">By signing up you agree to our Terms and Privacy Policy.</p>
+  </div>
+</div>
 
-.overlay-card {
-  background: var(--navy);
-  border-radius: 28px 28px 0 0;
-  padding: 28px 24px 40px;
-  width: 100%;
-  max-width: 580px;
-  animation: slideUp .3s ease;
-}
 
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
-}
+<!-- ══════════════════════════════
+     SCREEN: LOGIN
+══════════════════════════════ -->
+<div id="screen-login" class="screen">
+  <div class="auth-wrap">
+    <button class="btn-back" onclick="showScreen('screen-welcome')" id="login-back">← Back</button>
+    <div class="auth-logo">Slaag<em>NL</em></div>
+    <h2 class="auth-title" id="li-title">Welcome back</h2>
+    <p class="auth-sub" id="li-sub">Log in to continue studying</p>
 
-.overlay-result {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-.overlay-rule {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--orange);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-}
-.overlay-exp {
-  color: rgba(253,246,236,.75);
-  font-size: 14px;
-  line-height: 1.65;
-  margin-bottom: 24px;
-}
-.overlay-btn { margin-top: 0; }
+    <div class="form-group">
+      <label class="form-label" id="li-lbl-email">Email</label>
+      <input class="form-input" type="email" id="li-email">
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="li-lbl-pass">Password</label>
+      <input class="form-input" type="password" id="li-pass">
+      <a href="#" class="forgot-link" id="li-forgot">Forgot password?</a>
+    </div>
 
-/* ══════════════════════════════════════
-   RESULTS SCREEN
-══════════════════════════════════════ */
-#screen-results { background: var(--navy); }
+    <button class="btn-primary" onclick="handleLogin()" id="li-btn">Log in</button>
+    <p class="auth-footer"><span id="li-footer-text">Don't have an account?</span> <a href="#" onclick="showScreen('screen-signup')" id="li-link-signup">Sign up free</a></p>
+  </div>
+</div>
 
-.results-wrap {
-  flex: 1;
-  padding: 48px 24px 56px;
-  max-width: 460px;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.results-back {
-  align-self: flex-start;
-  margin-bottom: 28px;
-}
+<!-- ══════════════════════════════
+     SCREEN: VERIFY EMAIL
+══════════════════════════════ -->
+<div id="screen-verify" class="screen">
+  <div class="verify-wrap">
+    <div class="verify-icon">📬</div>
+    <h2 class="verify-title" id="ve-title">Check your email</h2>
+    <p class="verify-sub" id="ve-sub">We sent a verification link to</p>
+    <p class="verify-email" id="ve-email"></p>
+    <p class="verify-note" id="ve-note">Click the link to activate your account and access your dashboard.</p>
+    <button class="btn-primary btn-outline" onclick="resendEmail()" id="ve-resend">Resend email</button>
+    <p class="verify-spam" id="ve-spam">Can't find it? Check your spam folder.</p>
+  </div>
+</div>
 
-.results-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--cream);
-  align-self: flex-start;
-  margin-bottom: 32px;
-}
-.results-logo em { color:var(--orange); font-style:normal; }
 
-/* Score ring */
-.score-ring-wrap {
-  position: relative;
-  width: 148px; height: 148px;
-  margin-bottom: 24px;
-}
-.score-ring-wrap svg {
-  transform: rotate(-90deg);
-  position: absolute; top:0; left:0;
-}
-.score-center {
-  position: absolute; inset:0;
-  display: flex; flex-direction:column;
-  align-items:center; justify-content:center;
-}
-.score-pct {
-  font-family: 'Playfair Display', serif;
-  font-size: 40px;
-  font-weight: 900;
-  color: var(--cream);
-  line-height: 1;
-}
-.score-sub {
-  font-size: 11px;
-  color: rgba(253,246,236,.4);
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  margin-top: 3px;
-}
-
-.results-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--cream);
-  text-align: center;
-  margin-bottom: 8px;
-}
-.results-sub {
-  color: rgba(253,246,236,.75);
-  font-size: 15px;
-  text-align: center;
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
-
-/* Topic breakdown */
-.breakdown {
-  width: 100%;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: var(--r-lg);
-  padding: 18px;
-  margin-bottom: 24px;
-}
-.breakdown-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: rgba(253,246,236,.6);
-  font-weight: 600;
-  margin-bottom: 14px;
-}
-.breakdown-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 7px 0;
-  border-bottom: 1px solid rgba(255,255,255,.05);
-  font-size: 14px;
-}
-.breakdown-row:last-child { border-bottom:none; }
-.breakdown-topic { color:rgba(253,246,236,.85); }
-.status-pill {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 99px;
-}
-.pill-good  { background:rgba(46,204,138,.15); color:var(--green); }
-.pill-mid   { background:rgba(244,200,66,.15);  color:var(--yellow); }
-.pill-weak  { background:rgba(232,69,90,.15);   color:var(--red); }
-
-/* Upgrade card */
-.upgrade-card {
-  width: 100%;
-  background: linear-gradient(135deg, var(--navy2), var(--navy3));
-  border: 1px solid rgba(244,124,58,.25);
-  border-radius: var(--r-lg);
-  padding: 24px 20px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 14px;
-}
-.upgrade-card::before {
-  content: '';
-  position: absolute;
-  top:-40px; right:-40px;
-  width:120px; height:120px;
-  background: radial-gradient(circle, rgba(244,124,58,.2), transparent);
-  border-radius: 50%;
-}
-.upgrade-flag { font-size:32px; margin-bottom:10px; }
-.upgrade-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--cream);
-  margin-bottom: 6px;
-}
-.upgrade-sub {
-  color: rgba(253,246,236,.5);
-  font-size: 13px;
-  line-height: 1.6;
-  margin-bottom: 16px;
-}
-.upgrade-features {
-  list-style: none;
-  text-align: left;
-  margin-bottom: 20px;
-}
-.upgrade-features li {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 13px;
-  color: rgba(253,246,236,.7);
-  padding: 5px 0;
-}
-.upgrade-features li::before {
-  content: '✓';
-  color: var(--green);
-  font-weight: 700;
-  flex-shrink: 0;
-}
-.premium-badge {
-  display: inline-block;
-  background: linear-gradient(90deg, var(--yellow), var(--orange));
-  color: var(--navy);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 99px;
-  margin-bottom: 14px;
-  letter-spacing: .5px;
-}
-
-/* ══════════════════════════════════════
-   AUTH SCREENS
-══════════════════════════════════════ */
-#screen-signup, #screen-login {
-  background: var(--cream);
-  overflow-y: auto;
-}
-
-.auth-wrap {
-  width: 100%;
-  max-width: 460px;
-  margin: 0 auto;
-  padding: 32px 24px 60px;
-}
-
-.auth-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  font-weight: 900;
-  color: var(--navy);
-  margin-bottom: 6px;
-}
-.auth-logo em { color:var(--orange); font-style:normal; }
-
-.auth-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 4px;
-}
-.auth-sub {
-  color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 28px;
-  line-height: 1.5;
-}
-
-/* On light screens, back btn style */
-#screen-signup .btn-back,
-#screen-login .btn-back {
-  color: var(--muted);
-  margin-bottom: 28px;
-}
-#screen-signup .btn-back:hover,
-#screen-login .btn-back:hover { color: var(--navy); }
-
-.form-group { margin-bottom: 16px; }
-
-.form-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--navy);
-  margin-bottom: 6px;
-  letter-spacing: .1px;
-}
-
-.form-input {
-  width: 100%;
-  background: var(--white);
-  border: 2px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 13px 15px;
-  font-size: 15px;
-  color: #1a1a2e;
-  font-family: 'DM Sans', sans-serif;
-  transition: border-color var(--ease), box-shadow var(--ease);
-  outline: none;
-  -webkit-appearance: none;
-}
-.form-input:focus {
-  border-color: var(--orange);
-  box-shadow: 0 0 0 4px var(--orange-glow);
-}
-.form-select {
-  cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7a99' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 13px center;
-  padding-right: 38px;
-}
-
-.input-hint {
-  margin-top: 5px;
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.forgot-link {
-  display: block;
-  margin-top: 7px;
-  font-size: 12px;
-  color: var(--orange);
-  text-decoration: none;
-  font-weight: 500;
-}
-.forgot-link:hover { text-decoration:underline; }
-
-#screen-signup .btn-primary,
-#screen-login .btn-primary {
-  margin-top: 6px;
-}
-
-.auth-footer {
-  margin-top: 18px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--muted);
-}
-.auth-footer a {
-  color: var(--orange);
-  font-weight: 600;
-  text-decoration: none;
-}
-.auth-footer a:hover { text-decoration:underline; }
-
-.terms-note {
-  margin-top: 14px;
-  text-align: center;
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-.form-error {
-  color: var(--red);
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-/* ══════════════════════════════════════
-   VERIFY EMAIL
-══════════════════════════════════════ */
-#screen-verify {
-  background: var(--navy);
-  align-items: center;
-  justify-content: center;
-  padding: 48px 24px;
-}
-.verify-wrap { max-width:360px; text-align:center; }
-.verify-icon { font-size:60px; margin-bottom:20px; }
-.verify-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--cream);
-  margin-bottom: 10px;
-}
-.verify-sub { color:rgba(253,246,236,.55); font-size:14px; margin-bottom:6px; }
-.verify-email {
-  color: var(--cream);
-  font-weight: 600;
-  font-size: 15px;
-  margin-bottom: 14px;
-}
-.verify-note { color:rgba(253,246,236,.4); font-size:13px; line-height:1.6; margin-bottom:24px; }
-.verify-spam { margin-top:14px; font-size:11px; color:rgba(253,246,236,.25); }
-
-/* ══════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════ */
-@media (max-width: 380px) {
-  .welcome-headline { font-size:28px; }
-  .q-text { font-size:18px; }
-  .stat-num { font-size:18px; }
-}
-@media (min-width: 640px) {
-  .welcome-headline { font-size:42px; }
-  .test-body { padding:36px 32px 56px; }
-  .auth-wrap { padding:44px 32px 64px; }
-}
+<script src="js/i18n.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
