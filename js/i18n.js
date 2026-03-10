@@ -90,6 +90,17 @@ const T = {
     veResend:    "Resend email",
     veSpam:      "Can't find it? Check your spam folder.",
 
+    // Exam type screen
+    etBack:       "← Back",
+    etTitle:      "What are you preparing for?",
+    etSub:        "The test adapts to your exam level.",
+    etMvvName:    "MVV · Embassy exam",
+    etMvvLevel:   "Level A1",
+    etMvvDesc:    "For people applying from outside the Netherlands",
+    etNatName:    "Naturalization",
+    etNatLevel:   "Level A2 · Coming soon",
+    etNatDesc:    "For people applying for Dutch citizenship",
+
     // Errors
     errName:     "Please enter your full name",
     errAge:      "Please enter a valid age (16–99)",
@@ -185,6 +196,17 @@ const T = {
     veResend:    "Reenviar correo",
     veSpam:      "¿No lo encuentras? Revisa tu carpeta de spam.",
 
+    // Exam type screen
+    etBack:       "← Volver",
+    etTitle:      "¿Para qué te estás preparando?",
+    etSub:        "El test se adapta a tu nivel de examen.",
+    etMvvName:    "MVV · Examen de embajada",
+    etMvvLevel:   "Nivel A1",
+    etMvvDesc:    "Para personas que solicitan desde fuera de Holanda",
+    etNatName:    "Naturalización",
+    etNatLevel:   "Nivel A2 · Próximamente",
+    etNatDesc:    "Para personas que solicitan la ciudadanía holandesa",
+
     // Errors
     errName:     "Por favor ingresa tu nombre completo",
     errAge:      "Por favor ingresa una edad válida (16–99)",
@@ -279,6 +301,17 @@ const T = {
     veNote:      "انقر على الرابط لتفعيل حسابك والوصول إلى لوحتك.",
     veResend:    "إعادة إرسال البريد",
     veSpam:      "لا تجده؟ تحقق من مجلد الرسائل غير المرغوب فيها.",
+
+    // Exam type screen
+    etBack:       "→ رجوع",
+    etTitle:      "لماذا تستعد؟",
+    etSub:        "يتكيف الاختبار مع مستوى امتحانك.",
+    etMvvName:    "MVV · امتحان السفارة",
+    etMvvLevel:   "المستوى A1",
+    etMvvDesc:    "للأشخاص الذين يتقدمون من خارج هولندا",
+    etNatName:    "التجنيس",
+    etNatLevel:   "المستوى A2 · قريباً",
+    etNatDesc:    "للأشخاص الذين يتقدمون للحصول على الجنسية الهولندية",
 
     // Errors
     errName:     "يرجى إدخال اسمك الكامل",
