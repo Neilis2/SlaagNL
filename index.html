@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SlaagNL</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     SCREEN: WELCOME
+══════════════════════════════ -->
+<div id="screen-welcome" class="screen active">
+  <div class="welcome-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <div class="welcome-content">
+
+    <div class="logo-row">
+      <span class="logo-flag">🇳🇱</span>
+      <span class="logo">Slaag<em>NL</em></span>
+      <span class="badge-beta">Beta</span>
+    </div>
+
+    <h1 class="welcome-headline" id="w-headline">Pass your Dutch<br>integration exam</h1>
+    <p class="welcome-sub" id="w-sub">Adaptive learning that speaks your language.<br>Start free — no account needed.</p>
+
+    <!-- Before / After stats -->
+    <div class="stats-card">
+      <div class="stats-col">
+        <div class="stats-label-top" id="w-before">Before</div>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="stat-num red">20K+</div>
+            <div class="stat-lbl" id="w-s1">exams/year</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num red">44%</div>
+            <div class="stat-lbl" id="w-s2">pass rate</div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-arrow">→</div>
+      <div class="stats-col">
+        <div class="stats-label-top green" id="w-after">With SlaagNL</div>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="stat-num green">3x</div>
+            <div class="stat-lbl" id="w-s3">more effective</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num green">🎯</div>
+            <div class="stat-lbl" id="w-s4">personalized</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Language selector -->
+    <p class="lang-label" id="w-lang-label">Choose your language</p>
+    <div class="lang-row">
+      <button class="lang-btn" id="btn-es" onclick="setLang('es')">🇪🇸 Español</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇬🇧 English</button>
+      <button class="lang-btn" id="btn-ar" onclick="setLang('ar')">🇸🇦 العربية</button>
+    </div>
+
+    <button class="btn-primary" onclick="goToTest()" id="w-cta">Take the free level test →</button>
+    <p class="cta-note" id="w-note">3 minutes · No account needed</p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     SCREEN: TEST
+══════════════════════════════ -->
+<div id="screen-test" class="screen">
+
+  <div class="test-header">
+    <button class="btn-back" onclick="showScreen('screen-welcome')" id="test-back">← Back</button>
+    <div class="test-progress-wrap">
+      <div class="test-progress-fill" id="test-progress"></div>
+    </div>
+    <div class="test-counter" id="test-counter">1/10</div>
+  </div>
+
+  <div class="test-body" id="test-body"></div>
+
+  <!-- Answer overlay / modal -->
+  <div class="overlay" id="answer-overlay">
+    <div class="overlay-card" id="overlay-card">
+      <div class="overlay-result" id="overlay-result"></div>
+      <div class="overlay-rule" id="overlay-rule"></div>
+      <div class="overlay-exp" id="overlay-exp"></div>
+      <button class="btn-primary overlay-btn" id="overlay-next" onclick="nextQuestion()"></button>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════
+     SCREEN: RESULTS
+══════════════════════════════ -->
+<div id="screen-results" class="screen">
+  <div class="results-wrap" id="results-wrap"></div>
+</div>
+
+
+<!-- ══════════════════════════════
+     SCREEN: SIGNUP
+══════════════════════════════ -->
+<div id="screen-signup" class="screen">
+  <div class="auth-wrap">
+    <button class="btn-back" onclick="showScreen('screen-results')" id="signup-back">← Back</button>
+    <div class="auth-logo">Slaag<em>NL</em></div>
+    <h2 class="auth-title" id="su-title">Create your free account</h2>
+    <p class="auth-sub" id="su-sub">Save your progress and get your personalized plan</p>
+
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-name">Full name</label>
+      <input class="form-input" type="text" id="su-name">
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-age">Age</label>
+      <input class="form-input" type="number" id="su-age" min="16" max="99" placeholder="e.g. 28">
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-email">Email</label>
+      <input class="form-input" type="email" id="su-email">
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-pass">Password</label>
+      <input class="form-input" type="password" id="su-pass">
+      <div class="input-hint" id="su-hint-pass">Minimum 8 characters</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-country">Country of origin</label>
+      <select class="form-input form-select" id="su-country">
+        <option value="">--</option>
+        <option value="cu">🇨🇺 Cuba</option>
+        <option value="mx">🇲🇽 Mexico</option>
+        <option value="co">🇨🇴 Colombia</option>
+        <option value="ve">🇻🇪 Venezuela</option>
+        <option value="tr">🇹🇷 Turkey</option>
+        <option value="ma">🇲🇦 Morocco</option>
+        <option value="sy">🇸🇾 Syria</option>
+        <option value="eg">🇪🇬 Egypt</option>
+        <option value="other">🌍 Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-date">Exam date (approximate)</label>
+      <input class="form-input" type="date" id="su-date">
+      <div class="input-hint" id="su-hint-date">Don't know yet? Leave blank</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="su-lbl-type">Type of exam</label>
+      <select class="form-input form-select" id="su-type">
+        <option value="embassy" id="su-opt-emb">Embassy (outside Netherlands)</option>
+        <option value="nl" id="su-opt-nl">Inside the Netherlands</option>
+      </select>
+    </div>
+
+    <button class="btn-primary" onclick="handleSignup()" id="su-btn">Create account & start studying</button>
+    <p class="auth-footer"><span id="su-footer-text">Already have an account?</span> <a href="#" onclick="showScreen('screen-login')" id="su-link-login">Log in</a></p>
+    <p class="terms-note" id="su-terms">By signing up you agree to our Terms and Privacy Policy.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     SCREEN: LOGIN
+══════════════════════════════ -->
+<div id="screen-login" class="screen">
+  <div class="auth-wrap">
+    <button class="btn-back" onclick="showScreen('screen-welcome')" id="login-back">← Back</button>
+    <div class="auth-logo">Slaag<em>NL</em></div>
+    <h2 class="auth-title" id="li-title">Welcome back</h2>
+    <p class="auth-sub" id="li-sub">Log in to continue studying</p>
+
+    <div class="form-group">
+      <label class="form-label" id="li-lbl-email">Email</label>
+      <input class="form-input" type="email" id="li-email">
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="li-lbl-pass">Password</label>
+      <input class="form-input" type="password" id="li-pass">
+      <a href="#" class="forgot-link" id="li-forgot">Forgot password?</a>
+    </div>
+
+    <button class="btn-primary" onclick="handleLogin()" id="li-btn">Log in</button>
+    <p class="auth-footer"><span id="li-footer-text">Don't have an account?</span> <a href="#" onclick="showScreen('screen-signup')" id="li-link-signup">Sign up free</a></p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     SCREEN: VERIFY EMAIL
+══════════════════════════════ -->
+<div id="screen-verify" class="screen">
+  <div class="verify-wrap">
+    <div class="verify-icon">📬</div>
+    <h2 class="verify-title" id="ve-title">Check your email</h2>
+    <p class="verify-sub" id="ve-sub">We sent a verification link to</p>
+    <p class="verify-email" id="ve-email"></p>
+    <p class="verify-note" id="ve-note">Click the link to activate your account and access your dashboard.</p>
+    <button class="btn-primary btn-outline" onclick="resendEmail()" id="ve-resend">Resend email</button>
+    <p class="verify-spam" id="ve-spam">Can't find it? Check your spam folder.</p>
+  </div>
+</div>
+
+
+<script src="js/i18n.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
