@@ -79,12 +79,50 @@
 
 
 <!-- ══════════════════════════════
+     SCREEN: EXAM TYPE
+══════════════════════════════ -->
+<div id="screen-exam-type" class="screen">
+  <div class="welcome-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="bg-grid"></div>
+  </div>
+  <div class="exam-type-wrap">
+    <button class="btn-back" onclick="showScreen('screen-welcome')" id="et-back">← Back</button>
+    <div class="exam-type-logo">Slaag<em>NL</em></div>
+    <h2 class="exam-type-title" id="et-title">What are you preparing for?</h2>
+    <p class="exam-type-sub" id="et-sub">The test adapts to your exam level.</p>
+    <div class="exam-type-cards">
+      <button class="exam-type-card" onclick="selectExamType('mvv')">
+        <div class="et-icon">🛂</div>
+        <div class="et-info">
+          <div class="et-name" id="et-mvv-name">MVV · Embassy exam</div>
+          <div class="et-level" id="et-mvv-level">Level A1</div>
+          <div class="et-desc" id="et-mvv-desc">For people applying from outside the Netherlands</div>
+        </div>
+        <div class="et-arrow">→</div>
+      </button>
+      <button class="exam-type-card et-card-soon" onclick="selectExamType('nat')">
+        <div class="et-icon">🏅</div>
+        <div class="et-info">
+          <div class="et-name" id="et-nat-name">Naturalization</div>
+          <div class="et-level et-soon" id="et-nat-level">Level A2 · Coming soon</div>
+          <div class="et-desc" id="et-nat-desc">For people applying for Dutch citizenship</div>
+        </div>
+        <div class="et-arrow" style="opacity:.3">→</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
      SCREEN: TEST
 ══════════════════════════════ -->
 <div id="screen-test" class="screen">
 
   <div class="test-header">
-    <button class="btn-back" onclick="showScreen('screen-welcome')" id="test-back">← Back</button>
+    <button class="btn-back" onclick="showScreen('screen-exam-type')" id="test-back">← Back</button>
     <div class="test-progress-wrap">
       <div class="test-progress-fill" id="test-progress"></div>
     </div>
