@@ -42,7 +42,7 @@ function applyLang(lang) {
   setHTML('w-headline', t.headline.replace('\n', '<br>'));
   setHTML('w-sub',      t.sub.replace('\n', '<br>'));
   set('w-before',   t.before);
-  set('w-after',    t.after);
+  // w-after uses logo HTML styling, not plain text
   set('w-s1',       t.s1);
   set('w-s2',       t.s2);
   set('w-s3',       t.s3);
