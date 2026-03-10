@@ -108,6 +108,11 @@ body.rtl .stat-row { flex-direction: row-reverse; }
   margin-bottom: 28px;
 }
 .logo-flag { font-size:26px; }
+.logo-img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
 .logo {
   font-family: 'Playfair Display', serif;
   font-size: 34px;
