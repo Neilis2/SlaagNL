@@ -1,12 +1,10 @@
 // ══════════════════════════════════════
-// SLAAGNL — Firebase (compat mode)
+// SLAAGNL — Firebase v12 (ES Modules)
 // ══════════════════════════════════════
 
-function showDebug(msg) {
-  const el = document.getElementById('su-debug');
-  if (el) { el.style.display = 'block'; el.textContent = msg; }
-  console.error('SLAAGNL DEBUG:', msg);
-}
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyBmK87GK96aAju66-FwxxtAX3u4jLNvTk8",
@@ -17,18 +15,14 @@ const firebaseConfig = {
   appId:             "1:421592574232:web:848ac9425cd5b71336566d"
 };
 
-try {
-  firebase.initializeApp(firebaseConfig);
-  showDebug('✅ Firebase iniciado');
-} catch(e) {
-  showDebug('❌ Error iniciando Firebase: ' + e.message);
-}
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
 
-const auth = firebase.auth();
-const db   = firebase.firestore();
+console.log("✅ Firebase inicializado");
 
 // Auth state listener
-auth.onAuthStateChanged(async (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
     if (!user.emailVerified) {
       showScreen('screen-verify');
@@ -36,12 +30,12 @@ auth.onAuthStateChanged(async (user) => {
       if (el) el.textContent = user.email;
     } else {
       try {
-        const snap = await db.collection('users').doc(user.uid).get();
-        if (snap.exists) {
-          state.user = { uid: user.uid, ...snap.data() };
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        if (snap.exists()) {
+          window.state.user = { uid: user.uid, ...snap.data() };
           showScreen('screen-dashboard');
         }
-      } catch(e) { showDebug('Profile error: ' + e.message); }
+      } catch(e) { console.error('Profile error:', e); }
     }
   }
 });
@@ -49,31 +43,23 @@ auth.onAuthStateChanged(async (user) => {
 // Sign up
 async function firebaseSignup(name, age, email, password, country, examDate, examType) {
   try {
-    showDebug('Intentando crear usuario: ' + email);
-    const cred = await auth.createUserWithEmailAndPassword(email, password);
-    showDebug('✅ Usuario creado: ' + cred.user.uid);
+    console.log("Creando usuario:", email);
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
     const user = cred.user;
-    
-    try {
-      await user.sendEmailVerification();
-      showDebug('✅ Email de verificación enviado');
-    } catch(e) {
-      showDebug('⚠️ Error enviando email: ' + e.message);
-    }
+    console.log("✅ Usuario creado:", user.uid);
 
-    try {
-      await db.collection('users').doc(user.uid).set({
-        name, age: parseInt(age), email, country,
-        examDate: examDate || null, examType,
-        lang: state.lang, level: 'A1',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        mastery: { grammatica:0, gezondheid:0, burgerschap:0, onderwijs:0, politiek:0, geschiedenis:0 },
-        streak: 0, lastStudied: null, premiumDaysLeft: 1,
-      });
-      showDebug('✅ Perfil guardado en Firestore');
-    } catch(e) {
-      showDebug('⚠️ Error guardando perfil: ' + e.message);
-    }
+    await sendEmailVerification(user);
+    console.log("✅ Email de verificación enviado");
+
+    await setDoc(doc(db, 'users', user.uid), {
+      name, age: parseInt(age), email, country,
+      examDate: examDate || null, examType,
+      lang: window.state.lang, level: 'A1',
+      createdAt: serverTimestamp(),
+      mastery: { grammatica:0, gezondheid:0, burgerschap:0, onderwijs:0, politiek:0, geschiedenis:0 },
+      streak: 0, lastStudied: null, premiumDaysLeft: 1,
+    });
+    console.log("✅ Perfil guardado en Firestore");
 
     const el = document.getElementById('ve-email');
     if (el) el.textContent = email;
@@ -81,7 +67,7 @@ async function firebaseSignup(name, age, email, password, country, examDate, exa
     return null;
 
   } catch (err) {
-    showDebug('❌ Error registro: ' + err.code + ' — ' + err.message);
+    console.error("❌ Error signup:", err.code, err.message);
     return handleAuthError(err);
   }
 }
@@ -89,7 +75,7 @@ async function firebaseSignup(name, age, email, password, country, examDate, exa
 // Log in
 async function firebaseLogin(email, password) {
   try {
-    const cred = await auth.signInWithEmailAndPassword(email, password);
+    const cred = await signInWithEmailAndPassword(auth, email, password);
     const user = cred.user;
     if (!user.emailVerified) {
       const el = document.getElementById('ve-email');
@@ -97,13 +83,14 @@ async function firebaseLogin(email, password) {
       showScreen('screen-verify');
       return null;
     }
-    const snap = await db.collection('users').doc(user.uid).get();
-    if (snap.exists) {
-      state.user = { uid: user.uid, ...snap.data() };
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    if (snap.exists()) {
+      window.state.user = { uid: user.uid, ...snap.data() };
       showScreen('screen-dashboard');
     }
     return null;
   } catch (err) {
+    console.error("❌ Error login:", err.code, err.message);
     return handleAuthError(err);
   }
 }
@@ -112,25 +99,23 @@ async function firebaseLogin(email, password) {
 async function firebaseResendVerification() {
   const user = auth.currentUser;
   if (user) {
-    try { await user.sendEmailVerification(); alert('Correo enviado'); }
+    try { await sendEmailVerification(user); alert('✅ Correo enviado'); }
     catch (err) { alert('Error: ' + err.message); }
-  } else {
-    alert('No hay sesión activa');
-  }
+  } else { alert('No hay sesión activa'); }
 }
 
 // Forgot password
 async function firebaseForgotPassword(email) {
   try {
-    await auth.sendPasswordResetEmail(email);
-    alert('Correo de recuperación enviado a ' + email);
-  } catch (err) { return handleAuthError(err); }
+    await sendPasswordResetEmail(auth, email);
+    alert('✅ Correo enviado a ' + email);
+  } catch (err) { alert(handleAuthError(err)); }
 }
 
 // Sign out
 async function firebaseSignOut() {
-  await auth.signOut();
-  state.user = null;
+  await signOut(auth);
+  window.state.user = null;
   showScreen('screen-welcome');
 }
 
@@ -139,13 +124,13 @@ async function updateMastery(topic, correct) {
   const user = auth.currentUser;
   if (!user) return;
   const change  = correct ? 3 : -5;
-  const current = state.user?.mastery?.[topic] ?? 0;
+  const current = window.state.user?.mastery?.[topic] ?? 0;
   const newVal  = Math.min(100, Math.max(0, current + change));
-  if (state.user?.mastery) state.user.mastery[topic] = newVal;
+  if (window.state.user?.mastery) window.state.user.mastery[topic] = newVal;
   try {
-    await db.collection('users').doc(user.uid).update({
+    await updateDoc(doc(db, 'users', user.uid), {
       [`mastery.${topic}`]: newVal,
-      lastStudied: firebase.firestore.FieldValue.serverTimestamp(),
+      lastStudied: serverTimestamp(),
     });
   } catch (err) { console.error('Mastery error:', err); }
 }
@@ -164,4 +149,5 @@ function handleAuthError(err) {
   return map[err.code] || err.message;
 }
 
+// Expose to app.js via window
 window.FB = { signup: firebaseSignup, login: firebaseLogin, resendVerification: firebaseResendVerification, forgotPassword: firebaseForgotPassword, signOut: firebaseSignOut, updateMastery };
