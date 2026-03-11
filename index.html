@@ -225,6 +225,7 @@
     </div>
 
     <button class="btn-primary" onclick="handleSignup()" id="su-btn">Create account & start studying</button>
+    <div id="su-debug" style="display:none;margin-top:12px;padding:12px;background:rgba(232,69,90,.15);border:1px solid #e8455a;border-radius:10px;color:#e8455a;font-size:13px;word-break:break-all;"></div>
     <p class="auth-footer"><span id="su-footer-text">Already have an account?</span> <a href="#" onclick="showScreen('screen-login')" id="su-link-login">Log in</a></p>
     <p class="terms-note" id="su-terms">By signing up you agree to our Terms and Privacy Policy.</p>
   </div>
@@ -275,10 +276,13 @@
 
 <script src="js/i18n.js"></script>
 <script src="js/questions.js"></script>
+<!-- Firebase CDN first -->
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<!-- App logic (defines state, showScreen) -->
 <script src="js/app.js"></script>
+<!-- Firebase logic (uses state, showScreen, and firebase global) -->
 <script src="js/firebase.js"></script>
 </body>
 </html>
