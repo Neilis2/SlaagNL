@@ -24,19 +24,13 @@ console.log("✅ Firebase inicializado");
 // Auth state listener
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    if (!user.emailVerified) {
-      showScreen('screen-verify');
-      const el = document.getElementById('ve-email');
-      if (el) el.textContent = user.email;
-    } else {
-      try {
-        const snap = await getDoc(doc(db, 'users', user.uid));
-        if (snap.exists()) {
-          window.state.user = { uid: user.uid, ...snap.data() };
-          showScreen('screen-dashboard');
-        }
-      } catch(e) { console.error('Profile error:', e); }
-    }
+    try {
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      if (snap.exists()) {
+        window.state.user = { uid: user.uid, ...snap.data() };
+        showScreen('screen-dashboard');
+      }
+    } catch(e) { console.error('Profile error:', e); }
   }
 });
 
@@ -48,11 +42,14 @@ async function firebaseSignup(name, age, email, password, country, examDate, exa
     const user = cred.user;
     console.log("✅ Usuario creado:", user.uid);
 
-    await sendEmailVerification(user, {
-      url: 'https://neilis2.github.io/SlaagNL/',
-      handleCodeInApp: false,
-    });
-    console.log("✅ Email de verificación enviado");
+    try {
+      await sendEmailVerification(user, {
+        url: 'https://neilis2.github.io/SlaagNL/',
+        handleCodeInApp: false,
+      });
+    } catch(e) {
+      console.log('Email verification skipped:', e.message);
+    }
 
     await setDoc(doc(db, 'users', user.uid), {
       name, age: parseInt(age), email, country,
@@ -64,9 +61,12 @@ async function firebaseSignup(name, age, email, password, country, examDate, exa
     });
     console.log("✅ Perfil guardado en Firestore");
 
-    const el = document.getElementById('ve-email');
-    if (el) el.textContent = email;
-    showScreen('screen-verify');
+    // Go straight to dashboard — skip email verification for now
+    window.state.user = { uid: user.uid, name, email, lang: window.state.lang,
+      mastery: { grammatica:0, gezondheid:0, burgerschap:0, onderwijs:0, politiek:0, geschiedenis:0 },
+      premiumDaysLeft: 1,
+    };
+    showScreen('screen-dashboard');
     return null;
 
   } catch (err) {
@@ -80,12 +80,6 @@ async function firebaseLogin(email, password) {
   try {
     const cred = await signInWithEmailAndPassword(auth, email, password);
     const user = cred.user;
-    if (!user.emailVerified) {
-      const el = document.getElementById('ve-email');
-      if (el) el.textContent = user.email;
-      showScreen('screen-verify');
-      return null;
-    }
     const snap = await getDoc(doc(db, 'users', user.uid));
     if (snap.exists()) {
       window.state.user = { uid: user.uid, ...snap.data() };
