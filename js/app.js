@@ -6,9 +6,12 @@
 const state = {
   lang: 'en',
   currentQ: 0,
-  answers: [],   // { topic, topicIcon, correct }
+  answers: [],
   answered: false,
+  user: null,
+  examType: null,
 };
+window.state = state;
 
 // ── Init ───────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -418,41 +421,40 @@ function showResults() {
 // ══════════════════════════════════════
 // SIGNUP
 // ══════════════════════════════════════
-function handleSignup() {
+async function handleSignup() {
   const t    = T[state.lang];
   const name = document.getElementById('su-name').value.trim();
   const age  = parseInt(document.getElementById('su-age').value);
   const email= document.getElementById('su-email').value.trim();
   const pass = document.getElementById('su-pass').value;
+  const country  = document.getElementById('su-country').value;
+  const examDate = document.getElementById('su-date').value;
+  const examType = document.getElementById('su-type').value;
 
   clearErrors();
 
-  if (!name)                  { showErr('su-name', t.errName);  return; }
-  if (!age || age < 16 || age > 99) { showErr('su-age', t.errAge);   return; }
-  if (!validEmail(email))     { showErr('su-email', t.errEmail); return; }
-  if (pass.length < 8)        { showErr('su-pass', t.errPass);  return; }
+  if (!name)                       { showErr('su-name',  t.errName);  return; }
+  if (!age || age < 16 || age > 99){ showErr('su-age',   t.errAge);   return; }
+  if (!validEmail(email))          { showErr('su-email', t.errEmail); return; }
+  if (pass.length < 8)             { showErr('su-pass',  t.errPass);  return; }
 
-  const user = {
-    name, age, email,
-    country:  document.getElementById('su-country').value,
-    examDate: document.getElementById('su-date').value,
-    examType: document.getElementById('su-type').value,
-    lang:     state.lang,
-    createdAt: new Date().toISOString(),
-  };
+  const btn = document.getElementById('su-btn');
+  btn.textContent = '...';
+  btn.disabled = true;
 
-  localStorage.setItem('slaagnl_user', JSON.stringify(user));
-  document.getElementById('ve-email').textContent = email;
-  showScreen('screen-verify');
+  const error = await window.FB.signup(name, age, email, pass, country, examDate, examType);
 
-  // TODO: connect Firebase Auth
-  console.log('New user:', user);
+  if (error) {
+    showErr('su-email', error);
+    btn.textContent = t.suBtn;
+    btn.disabled = false;
+  }
 }
 
 // ══════════════════════════════════════
 // LOGIN
 // ══════════════════════════════════════
-function handleLogin() {
+async function handleLogin() {
   const t     = T[state.lang];
   const email = document.getElementById('li-email').value.trim();
   const pass  = document.getElementById('li-pass').value;
@@ -462,13 +464,30 @@ function handleLogin() {
   if (!validEmail(email)) { showErr('li-email', t.errLiEmail); return; }
   if (!pass)              { showErr('li-pass',  t.errLiPass);  return; }
 
-  // TODO: connect Firebase Auth
-  console.log('Login:', email);
+  const btn = document.getElementById('li-btn');
+  btn.textContent = '...';
+  btn.disabled = true;
+
+  const error = await window.FB.login(email, pass);
+
+  if (error) {
+    showErr('li-email', error);
+    btn.textContent = t.liBtn;
+    btn.disabled = false;
+  }
 }
 
 function resendEmail() {
-  // TODO: Firebase resend
-  console.log('Resend verification');
+  window.FB.resendVerification();
+}
+
+function handleForgotPassword() {
+  const email = document.getElementById('li-email').value.trim();
+  if (!validEmail(email)) {
+    showErr('li-email', T[state.lang].errLiEmail);
+    return;
+  }
+  window.FB.forgotPassword(email);
 }
 
 // ══════════════════════════════════════
