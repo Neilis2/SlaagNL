@@ -48,7 +48,10 @@ async function firebaseSignup(name, age, email, password, country, examDate, exa
     const user = cred.user;
     console.log("✅ Usuario creado:", user.uid);
 
-    await sendEmailVerification(user);
+    await sendEmailVerification(user, {
+      url: 'https://neilis2.github.io/SlaagNL/',
+      handleCodeInApp: false,
+    });
     console.log("✅ Email de verificación enviado");
 
     await setDoc(doc(db, 'users', user.uid), {
