@@ -17,6 +17,9 @@ const T = {
     langLabel:   "Choose your language",
     cta:         "Take the free level test →",
     ctaNote:     "3 minutes · No account needed",
+    skip:        "Skip test → Go straight to studying",
+    loginLink:   "Already have an account?",
+    loginLinkBtn:"Log in",
 
     // Test
     backTest:    "← Back",
@@ -123,6 +126,9 @@ const T = {
     langLabel:   "Elige tu idioma",
     cta:         "Hacer el test de nivel gratis →",
     ctaNote:     "3 minutos · Sin registro",
+    skip:        "Saltar el test → Ir directo a estudiar",
+    loginLink:   "¿Ya tienes cuenta?",
+    loginLinkBtn:"Iniciar sesión",
 
     // Test
     backTest:    "← Volver",
@@ -229,6 +235,9 @@ const T = {
     langLabel:   "اختر لغتك",
     cta:         "ابدأ اختبار المستوى المجاني ←",
     ctaNote:     "3 دقائق · بدون تسجيل",
+    skip:        "تخطى الاختبار ← اذهب مباشرة للدراسة",
+    loginLink:   "هل لديك حساب بالفعل؟",
+    loginLinkBtn:"تسجيل الدخول",
 
     // Test
     backTest:    "→ رجوع",
