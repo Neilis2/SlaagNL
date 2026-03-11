@@ -2,6 +2,12 @@
 // SLAAGNL — Firebase (compat mode)
 // ══════════════════════════════════════
 
+function showDebug(msg) {
+  const el = document.getElementById('su-debug');
+  if (el) { el.style.display = 'block'; el.textContent = msg; }
+  console.error('SLAAGNL DEBUG:', msg);
+}
+
 const firebaseConfig = {
   apiKey:            "AIzaSyBmK87GK96aAju66-FwxxtAX3u4jLNvTk8",
   authDomain:        "slaagnl.firebaseapp.com",
@@ -11,7 +17,13 @@ const firebaseConfig = {
   appId:             "1:421592574232:web:848ac9425cd5b71336566d"
 };
 
-firebase.initializeApp(firebaseConfig);
+try {
+  firebase.initializeApp(firebaseConfig);
+  showDebug('✅ Firebase iniciado');
+} catch(e) {
+  showDebug('❌ Error iniciando Firebase: ' + e.message);
+}
+
 const auth = firebase.auth();
 const db   = firebase.firestore();
 
@@ -29,7 +41,7 @@ auth.onAuthStateChanged(async (user) => {
           state.user = { uid: user.uid, ...snap.data() };
           showScreen('screen-dashboard');
         }
-      } catch(e) { console.error('Profile error:', e); }
+      } catch(e) { showDebug('Profile error: ' + e.message); }
     }
   }
 });
@@ -37,23 +49,39 @@ auth.onAuthStateChanged(async (user) => {
 // Sign up
 async function firebaseSignup(name, age, email, password, country, examDate, examType) {
   try {
+    showDebug('Intentando crear usuario: ' + email);
     const cred = await auth.createUserWithEmailAndPassword(email, password);
+    showDebug('✅ Usuario creado: ' + cred.user.uid);
     const user = cred.user;
-    await user.sendEmailVerification();
-    await db.collection('users').doc(user.uid).set({
-      name, age: parseInt(age), email, country,
-      examDate: examDate || null, examType,
-      lang: state.lang, level: 'A1',
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      mastery: { grammatica:0, gezondheid:0, burgerschap:0, onderwijs:0, politiek:0, geschiedenis:0 },
-      streak: 0, lastStudied: null, premiumDaysLeft: 1,
-    });
+    
+    try {
+      await user.sendEmailVerification();
+      showDebug('✅ Email de verificación enviado');
+    } catch(e) {
+      showDebug('⚠️ Error enviando email: ' + e.message);
+    }
+
+    try {
+      await db.collection('users').doc(user.uid).set({
+        name, age: parseInt(age), email, country,
+        examDate: examDate || null, examType,
+        lang: state.lang, level: 'A1',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        mastery: { grammatica:0, gezondheid:0, burgerschap:0, onderwijs:0, politiek:0, geschiedenis:0 },
+        streak: 0, lastStudied: null, premiumDaysLeft: 1,
+      });
+      showDebug('✅ Perfil guardado en Firestore');
+    } catch(e) {
+      showDebug('⚠️ Error guardando perfil: ' + e.message);
+    }
+
     const el = document.getElementById('ve-email');
     if (el) el.textContent = email;
     showScreen('screen-verify');
     return null;
+
   } catch (err) {
-    console.error('Signup error:', err);
+    showDebug('❌ Error registro: ' + err.code + ' — ' + err.message);
     return handleAuthError(err);
   }
 }
@@ -76,7 +104,6 @@ async function firebaseLogin(email, password) {
     }
     return null;
   } catch (err) {
-    console.error('Login error:', err);
     return handleAuthError(err);
   }
 }
@@ -86,7 +113,9 @@ async function firebaseResendVerification() {
   const user = auth.currentUser;
   if (user) {
     try { await user.sendEmailVerification(); alert('Correo enviado'); }
-    catch (err) { console.error(err); }
+    catch (err) { alert('Error: ' + err.message); }
+  } else {
+    alert('No hay sesión activa');
   }
 }
 
