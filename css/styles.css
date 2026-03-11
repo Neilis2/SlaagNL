@@ -293,6 +293,41 @@ body.rtl .stat-row { flex-direction: row-reverse; }
   color: rgba(253,246,236,.3);
 }
 
+.btn-skip {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: rgba(253,246,236,.5);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  padding: 14px 0 4px;
+  transition: color var(--ease);
+  text-align: center;
+}
+.btn-skip:hover { color: var(--cream); }
+
+.btn-login-link {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: rgba(253,246,236,.35);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  padding: 8px 0 0;
+  transition: color var(--ease);
+  text-align: center;
+}
+.btn-login-link span {
+  color: var(--orange);
+  font-weight: 600;
+}
+.btn-login-link:hover { color: rgba(253,246,236,.6); }
+
 /* Back button — no background */
 .btn-back {
   display: inline-flex;
