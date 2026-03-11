@@ -496,3 +496,4 @@ function clearErrors() {
 function validEmail(e) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 }
+
