@@ -110,7 +110,7 @@ body.rtl .stat-row { flex-direction: row-reverse; }
 }
 .logo-flag { font-size:26px; }
 .logo-img {
-  height: 140px;
+  height: 200px;
   width: auto;
   object-fit: contain;
 }
