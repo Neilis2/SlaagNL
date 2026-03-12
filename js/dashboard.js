@@ -341,8 +341,11 @@ function renderTopics(lang, mastery) {
 }
 
 function openTopic(topicId) {
-  localStorage.setItem('slaagnl_topic', topicId);
-  showToast(dt().toastSoon);
+  if (topicId === 'grammatica' && window.openTopicGrammatica) {
+    openTopicGrammatica();
+  } else {
+    showToast(dt().toastSoon);
+  }
 }
 
 // ── Toast ──────────────────────────────
