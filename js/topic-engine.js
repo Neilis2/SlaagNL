@@ -248,3 +248,12 @@ function updateMastery(topicId, points) {
 }
 
 window.openTopicGrammatica = openTopicGrammatica;
+
+// Override openTopic from dashboard.js
+window.openTopic = function(topicId) {
+  if (topicId === 'grammatica') {
+    openTopicGrammatica();
+  } else {
+    if (window.showToast) showToast(window.DT?.[window.state?.lang||'es']?.toastSoon || '¡Próximamente!');
+  }
+};
