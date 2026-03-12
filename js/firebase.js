@@ -28,7 +28,10 @@ onAuthStateChanged(auth, async (user) => {
       const snap = await getDoc(doc(db, 'users', user.uid));
       if (snap.exists()) {
         window.state.user = { uid: user.uid, ...snap.data() };
+        const letter = document.getElementById('dash-avatar-letter');
+        if (letter && window.state.user.name) letter.textContent = window.state.user.name[0].toUpperCase();
         showScreen('screen-dashboard');
+        if (typeof renderDashboard === 'function') renderDashboard();
       }
     } catch(e) { console.error('Profile error:', e); }
   }
@@ -63,10 +66,13 @@ async function firebaseSignup(name, age, email, password, country, examDate, exa
 
     // Go straight to dashboard — skip email verification for now
     window.state.user = { uid: user.uid, name, email, lang: window.state.lang,
-      mastery: { grammatica:0, gezondheid:0, burgerschap:0, onderwijs:0, politiek:0, geschiedenis:0 },
-      premiumDaysLeft: 1,
+      mastery: {},
+      premiumDaysLeft: 1, streak: 0,
     };
+    const letter = document.getElementById('dash-avatar-letter');
+    if (letter && name) letter.textContent = name[0].toUpperCase();
     showScreen('screen-dashboard');
+    if (typeof renderDashboard === 'function') renderDashboard();
     return null;
 
   } catch (err) {
@@ -83,7 +89,10 @@ async function firebaseLogin(email, password) {
     const snap = await getDoc(doc(db, 'users', user.uid));
     if (snap.exists()) {
       window.state.user = { uid: user.uid, ...snap.data() };
+      const letter = document.getElementById('dash-avatar-letter');
+      if (letter && window.state.user.name) letter.textContent = window.state.user.name[0].toUpperCase();
       showScreen('screen-dashboard');
+      if (typeof renderDashboard === 'function') renderDashboard();
     }
     return null;
   } catch (err) {
