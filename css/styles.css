@@ -1576,3 +1576,201 @@ body { overflow-x: hidden; }
   cursor: pointer; font-family: inherit;
 }
 .btn-action.btn-danger { background: #e8455a; }
+
+/* ══════════════════════════════════════
+   TOPIC ENGINE
+══════════════════════════════════════ */
+.topic-screen {
+  display: flex; flex-direction: column;
+  min-height: 100vh; padding-bottom: 40px;
+  background: var(--navy);
+}
+
+/* Header */
+.topic-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px 10px;
+  background: var(--navy2);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  position: sticky; top: 0; z-index: 10;
+}
+.topic-back {
+  background: none; border: none;
+  color: var(--orange); font-size: 26px;
+  cursor: pointer; padding: 0 8px 0 0;
+  line-height: 1; flex-shrink: 0;
+}
+.topic-header-info { flex: 1; min-width: 0; }
+.topic-title-small {
+  font-size: 10px; color: var(--orange);
+  text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+}
+.topic-rule-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--cream); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.topic-rule-count {
+  font-size: 12px; color: rgba(253,246,236,.4);
+  font-weight: 600; flex-shrink: 0;
+}
+
+/* Progress */
+.topic-progress-wrap {
+  height: 3px; background: rgba(255,255,255,.08);
+}
+.topic-progress-fill {
+  height: 100%; background: var(--orange);
+  transition: width .4s ease;
+}
+
+/* Cards */
+.topic-card {
+  margin: 14px 16px 0;
+  background: var(--navy2);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.07);
+  overflow: hidden;
+}
+.card-body {
+  padding: 18px;
+  font-size: 14px; line-height: 1.7;
+  color: rgba(253,246,236,.85);
+}
+.card-body strong { color: var(--orange); }
+.card-body em { color: #a8e6cf; font-style: normal; font-weight: 600; }
+
+/* Tip */
+.tip-toggle {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 18px;
+  background: rgba(244,124,58,.06);
+  border-top: 1px solid rgba(255,255,255,.06);
+  cursor: pointer;
+}
+.tip-icon { font-size: 16px; }
+.tip-label { font-size: 13px; font-weight: 600; color: var(--orange); flex: 1; }
+.tip-arrow { color: var(--orange); font-size: 18px; }
+.tip-content {
+  padding: 14px 18px;
+  font-size: 13px; line-height: 1.6;
+  color: rgba(253,246,236,.7);
+  background: rgba(244,124,58,.04);
+  border-top: 1px solid rgba(255,255,255,.04);
+}
+.tip-content strong { color: var(--orange); }
+.tip-content em { color: #a8e6cf; font-style: normal; font-weight: 600; }
+
+/* Exercise */
+.exercise-card { padding: 18px; }
+.exercise-label {
+  font-size: 12px; font-weight: 700;
+  color: var(--orange); text-transform: uppercase;
+  letter-spacing: .8px; margin-bottom: 6px;
+}
+.exercise-translation {
+  font-size: 12px; color: rgba(253,246,236,.4);
+  margin-bottom: 14px; font-style: italic;
+}
+.answer-slots {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  min-height: 44px; padding: 10px;
+  background: rgba(0,0,0,.2);
+  border-radius: 12px; margin-bottom: 14px;
+  border: 1.5px dashed rgba(255,255,255,.12);
+}
+.answer-slot {
+  min-width: 52px; height: 36px;
+  border-radius: 8px; border: 1.5px dashed rgba(255,255,255,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: var(--cream);
+  padding: 0 10px; background: rgba(255,255,255,.04);
+  transition: all .2s;
+}
+.answer-slot.filled { border-color: var(--orange); background: rgba(244,124,58,.12); }
+.answer-slot.slot-correct { border-color: #2ecc71; background: rgba(46,204,113,.15); color: #2ecc71; }
+.answer-slot.slot-wrong   { border-color: #e74c3c; background: rgba(231,76,60,.15);  color: #e74c3c; }
+
+.word-bank {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.word-chip {
+  padding: 8px 14px; border-radius: 20px;
+  background: rgba(255,255,255,.07);
+  border: 1.5px solid rgba(255,255,255,.15);
+  color: var(--cream); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all .15s;
+  font-family: inherit;
+}
+.word-chip:active { transform: scale(.95); }
+.word-chip.used { opacity: .3; pointer-events: none; }
+
+.exercise-feedback {
+  margin-top: 12px; padding: 10px 14px;
+  border-radius: 10px; font-size: 13px; font-weight: 600;
+}
+.feedback-correct { background: rgba(46,204,113,.15); color: #2ecc71; }
+.feedback-wrong   { background: rgba(231,76,60,.12);  color: #e74c3c; }
+
+/* Challenge */
+.challenge-card { padding: 18px; }
+.challenge-label {
+  font-size: 12px; font-weight: 700;
+  color: #a78bfa; text-transform: uppercase;
+  letter-spacing: .8px; margin-bottom: 8px;
+}
+.challenge-question {
+  font-size: 14px; color: var(--cream);
+  line-height: 1.5; margin-bottom: 14px;
+  font-weight: 600;
+}
+.challenge-options { display: flex; flex-direction: column; gap: 8px; }
+.challenge-opt {
+  padding: 12px 16px; border-radius: 12px;
+  background: rgba(255,255,255,.05);
+  border: 1.5px solid rgba(255,255,255,.1);
+  color: var(--cream); font-size: 13px;
+  text-align: left; cursor: pointer;
+  transition: all .15s; font-family: inherit;
+  font-weight: 500;
+}
+.challenge-opt:active { transform: scale(.98); }
+.challenge-opt.opt-correct { border-color: #2ecc71; background: rgba(46,204,113,.15); color: #2ecc71; font-weight: 700; }
+.challenge-opt.opt-wrong   { border-color: #e74c3c; background: rgba(231,76,60,.12);  color: #e74c3c; }
+
+.challenge-feedback {
+  margin-top: 12px; padding: 12px 14px;
+  border-radius: 12px; font-size: 13px;
+  line-height: 1.5;
+}
+.challenge-feedback strong { font-weight: 700; }
+
+/* Next button */
+.topic-next-wrap {
+  margin: 18px 16px 0;
+  justify-content: center;
+}
+.btn-next-rule {
+  width: 100%; padding: 16px;
+  background: var(--orange); border: none;
+  border-radius: 14px; color: white;
+  font-size: 16px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+  transition: opacity .15s;
+}
+.btn-next-rule:active { opacity: .85; }
+
+/* Complete screen */
+.topic-complete {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px 32px; text-align: center;
+}
+.complete-emoji { font-size: 64px; margin-bottom: 16px; }
+.complete-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 900;
+  color: var(--cream); margin-bottom: 8px;
+}
+.complete-sub { font-size: 15px; color: rgba(253,246,236,.5); line-height: 1.5; }
