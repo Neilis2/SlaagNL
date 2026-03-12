@@ -48,7 +48,8 @@ body.rtl .stat-row { flex-direction: row-reverse; }
 /* ── Screens ── */
 .screen { display:none; min-height:100vh; flex-direction:column; position:relative; }
 .screen.active { display:flex; animation: fadeIn .3s ease; }
-body { overflow-x: hidden; }
+html, body { overflow-x: hidden; scroll-behavior: auto; }
+body { margin: 0; }
 
 @keyframes fadeIn {
   from { opacity:0; transform:translateY(10px); }
