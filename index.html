@@ -282,32 +282,30 @@
 
   <!-- HEADER -->
   <div class="dash-header">
-    <div class="dash-header-left">
-      <div id="dash-greeting" class="dash-greeting"></div>
-    </div>
+    <div id="dash-greeting" class="dash-greeting"></div>
     <div class="dash-header-right">
       <div id="dash-streak" class="streak-badge">🔥 0</div>
       <div class="dash-avatar" onclick="openDrawer()">
-        <span id="dash-avatar-letter">N</span>
+        <span id="dash-avatar-letter">?</span>
       </div>
     </div>
   </div>
 
   <!-- PREMIUM GIFT -->
-  <div id="dash-gift" class="dash-gift">
+  <div id="dash-gift" class="dash-gift" style="display:none">
     <div class="gift-icon">🎁</div>
     <div class="gift-text">
-      <div class="gift-title">¡1 día Premium gratis!</div>
-      <div class="gift-sub">Sin límite de ejercicios hoy</div>
+      <div class="gift-title" id="gift-title"></div>
+      <div class="gift-sub"   id="gift-sub"></div>
     </div>
-    <button class="gift-btn">Activar</button>
+    <button class="gift-btn" id="gift-btn" onclick="activatePremiumDay()"></button>
   </div>
 
   <!-- DOMINIO GENERAL -->
   <div class="dash-dominio">
     <div class="dominio-left">
       <div class="dominio-pct" id="dash-pct">0%</div>
-      <div class="dominio-label">DOMINIO GENERAL</div>
+      <div class="dominio-label" id="dash-dominio-label">DOMINIO GENERAL</div>
     </div>
     <div class="dominio-right">
       <div class="dominio-bar-wrap">
@@ -317,16 +315,14 @@
     </div>
   </div>
 
-  <!-- TOPICS -->
+  <!-- TOPICS — cream section -->
   <div class="dash-topics-wrap">
     <div id="dash-topics"></div>
   </div>
 
-  <!-- SIMULACRO FAB -->
+  <!-- TEST FINAL FAB -->
   <div class="sim-fab">
-    <button class="sim-btn locked" id="sim-btn" onclick="simBtnClick()">
-      🔒 Simulacro
-    </button>
+    <button class="sim-btn locked" id="sim-btn" onclick="simBtnClick()">🔒 Test Final</button>
   </div>
 
   <!-- TOAST -->
@@ -334,62 +330,168 @@
 
 </div>
 
-<!-- PROFILE DRAWER OVERLAY -->
+<!-- ══════════════════════════════
+     PROFILE SYSTEM
+══════════════════════════════ -->
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
 
-<!-- PROFILE DRAWER -->
+<!-- Main profile drawer -->
 <div class="profile-drawer" id="profile-drawer">
   <button class="drawer-close" onclick="closeDrawer()">✕</button>
-  <div class="drawer-name" id="drawer-name"></div>
-  <div class="drawer-email" id="drawer-email"></div>
-  <div class="drawer-divider"></div>
-  <button class="drawer-item" onclick="openProgressModal()">
-    <span class="di-icon">📊</span> Mi progreso
-  </button>
-  <button class="drawer-item" onclick="openLangModal()">
-    <span class="di-icon">🌐</span> Cambiar idioma
-  </button>
-  <div class="drawer-divider"></div>
-  <button class="drawer-item drawer-muted" onclick="openResetConfirm()">
-    <span class="di-icon">🔄</span> Reiniciar progreso
-  </button>
-  <button class="drawer-item drawer-danger" onclick="handleSignOut()">
-    <span class="di-icon">🚪</span> Cerrar sesión
-  </button>
-</div>
-
-<!-- PROGRESS MODAL -->
-<div class="modal-overlay" id="progress-modal">
-  <div class="dash-modal">
-    <div class="modal-title">Mi progreso 📊</div>
-    <div class="modal-sub">Cómo evoluciona cada tema</div>
-    <div id="progress-list"></div>
-    <button class="btn-modal-close" onclick="closeProgressModal()">Cerrar</button>
-  </div>
-</div>
-
-<!-- LANG MODAL -->
-<div class="modal-overlay" id="lang-modal">
-  <div class="dash-modal">
-    <div class="modal-title">🌐 Idioma</div>
-    <div class="modal-sub">Elige el idioma de las explicaciones</div>
-    <div class="lang-options">
-      <button class="lang-opt" onclick="changeLang('es')">🇪🇸 Español</button>
-      <button class="lang-opt" onclick="changeLang('en')">🇬🇧 English</button>
-      <button class="lang-opt" onclick="changeLang('ar')">🇸🇦 عربي</button>
+  <div class="drawer-user-info">
+    <div class="drawer-avatar-big" id="drawer-avatar-big">?</div>
+    <div>
+      <div class="drawer-name"  id="drawer-name"></div>
+      <div class="drawer-email" id="drawer-email"></div>
+      <div class="drawer-plan-label" id="drawer-plan-label"></div>
     </div>
-    <button class="btn-modal-close" onclick="closeLangModal()">Cerrar</button>
+  </div>
+  <div class="drawer-divider"></div>
+  <button class="drawer-item" onclick="openProgressPanel()">
+    <span class="drawer-item-icon">◎</span>
+    <span id="drawer-lbl-progress">Mi progreso</span>
+    <span class="drawer-chevron">›</span>
+  </button>
+  <button class="drawer-item" onclick="openEditPanel()">
+    <span class="drawer-item-icon">✎</span>
+    <span id="drawer-lbl-edit">Editar perfil</span>
+    <span class="drawer-chevron">›</span>
+  </button>
+  <button class="drawer-item" onclick="openSettingsPanel()">
+    <span class="drawer-item-icon">⚙</span>
+    <span id="drawer-lbl-settings">Configuración</span>
+    <span class="drawer-chevron">›</span>
+  </button>
+  <button class="drawer-item" onclick="openContactPanel()">
+    <span class="drawer-item-icon">✉</span>
+    <span id="drawer-lbl-contact">Contacto</span>
+    <span class="drawer-chevron">›</span>
+  </button>
+  <div class="drawer-divider"></div>
+  <button class="drawer-item drawer-item-plan" onclick="openPlansPanel()">
+    <span class="drawer-item-icon">★</span>
+    <span>Cambiar plan</span>
+    <span class="drawer-chevron">›</span>
+  </button>
+</div>
+
+<!-- Subpanel: Progress -->
+<div class="subpanel" id="subpanel-progress">
+  <div class="subpanel-header">
+    <button class="subpanel-back" onclick="closeAllSubpanels()">‹</button>
+    <div class="subpanel-title" id="progress-panel-title">Mi progreso</div>
+  </div>
+  <div class="subpanel-sub" id="progress-panel-sub">Evolución por tema</div>
+  <div class="subpanel-scroll">
+    <div id="progress-list"></div>
   </div>
 </div>
 
-<!-- RESET MODAL -->
-<div class="modal-overlay" id="reset-modal">
-  <div class="dash-modal">
-    <div class="modal-title">¿Reiniciar todo? 🔄</div>
-    <div class="modal-sub">Tu progreso vuelve a 0. Tu cuenta se mantiene.</div>
+<!-- Subpanel: Edit profile -->
+<div class="subpanel" id="subpanel-edit">
+  <div class="subpanel-header">
+    <button class="subpanel-back" onclick="closeAllSubpanels()">‹</button>
+    <div class="subpanel-title">—</div>
+  </div>
+  <div class="subpanel-body">
+    <label class="form-label" id="edit-name-label">Nombre</label>
+    <input class="form-input" id="edit-name-input" type="text">
+    <label class="form-label" id="edit-date-label">Fecha del examen</label>
+    <input class="form-input" id="edit-date-input" type="date">
+    <button class="btn-primary" id="edit-save-btn" onclick="saveEditProfile()" style="margin-top:20px">Guardar</button>
+  </div>
+</div>
+
+<!-- Subpanel: Settings -->
+<div class="subpanel" id="subpanel-settings">
+  <div class="subpanel-header">
+    <button class="subpanel-back" onclick="closeAllSubpanels()">‹</button>
+    <div class="subpanel-title">—</div>
+  </div>
+  <div class="subpanel-body">
+    <button class="drawer-item" onclick="openLangPanel()">
+      <span class="drawer-item-icon">◎</span>
+      <span id="settings-lang-label">Idioma de la app</span>
+      <span class="drawer-chevron">›</span>
+    </button>
+    <div class="drawer-divider"></div>
+    <button class="drawer-item" onclick="confirmResetProgress()">
+      <span class="drawer-item-icon">↺</span>
+      <span id="settings-reset-label">Reiniciar progreso</span>
+    </button>
+    <button class="drawer-item" onclick="confirmLogout()">
+      <span class="drawer-item-icon">→</span>
+      <span id="settings-logout-label">Cerrar sesión</span>
+    </button>
+    <div style="margin-top:40px">
+      <button class="drawer-item drawer-danger" onclick="confirmDeleteAccount()">
+        <span class="drawer-item-icon">✕</span>
+        <span id="settings-delete-label">Eliminar cuenta</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Subpanel: Language -->
+<div class="subpanel" id="subpanel-lang">
+  <div class="subpanel-header">
+    <button class="subpanel-back" onclick="closeAllSubpanels()">‹</button>
+    <div class="subpanel-title">Idioma</div>
+  </div>
+  <div class="subpanel-body">
+    <button class="lang-opt" onclick="changeLang('es')">🇪🇸 Español</button>
+    <button class="lang-opt" onclick="changeLang('en')">🇬🇧 English</button>
+    <button class="lang-opt" onclick="changeLang('ar')">🇸🇦 عربي</button>
+  </div>
+</div>
+
+<!-- Subpanel: Contact -->
+<div class="subpanel" id="subpanel-contact">
+  <div class="subpanel-header">
+    <button class="subpanel-back" onclick="closeAllSubpanels()">‹</button>
+    <div class="subpanel-title" id="contact-title">Contacto</div>
+  </div>
+  <div class="subpanel-body">
+    <p class="subpanel-sub" id="contact-sub">Estamos aquí para ayudarte</p>
+    <div class="contact-block">
+      <div class="contact-label" id="contact-email-label">Escríbenos a</div>
+      <a class="contact-email" href="mailto:soporte@slaagnl.com">soporte@slaagnl.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- Subpanel: Plans -->
+<div class="subpanel" id="subpanel-plans">
+  <div class="subpanel-header">
+    <button class="subpanel-back" onclick="closeAllSubpanels()">‹</button>
+    <div class="subpanel-title" id="plans-title">Planes</div>
+  </div>
+  <div class="subpanel-scroll">
+    <div id="plans-list" class="plans-list"></div>
+  </div>
+</div>
+
+<!-- Confirm modal (logout / reset) -->
+<div class="confirm-overlay" id="confirm-modal">
+  <div class="confirm-card">
+    <div class="confirm-title" id="confirm-title"></div>
+    <div class="confirm-sub"   id="confirm-sub"></div>
     <div class="confirm-btns">
-      <button class="btn-cancel" onclick="closeResetConfirm()">Cancelar</button>
-      <button class="btn-reset" onclick="confirmReset()">Sí, reiniciar</button>
+      <button class="btn-cancel" id="confirm-no"  onclick="closeConfirm()">Cancelar</button>
+      <button class="btn-action" id="confirm-yes">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete account modal -->
+<div class="confirm-overlay" id="delete-modal">
+  <div class="confirm-card">
+    <div class="confirm-title" id="delete-title">¿Eliminar cuenta?</div>
+    <div class="confirm-sub"   id="delete-sub">Esta acción es permanente.</div>
+    <input class="form-input" id="delete-pass-input" type="password" placeholder="Tu contraseña" style="margin:14px 0">
+    <div class="confirm-btns">
+      <button class="btn-cancel" id="delete-cancel-btn" onclick="closeDeleteModal()">Cancelar</button>
+      <button class="btn-action btn-danger" id="delete-confirm-btn" onclick="doDeleteAccount()">Eliminar</button>
     </div>
   </div>
 </div>
