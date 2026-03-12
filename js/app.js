@@ -137,7 +137,13 @@ function ph(id, text) {
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById(id);
-  if (el) { el.classList.add('active'); window.scrollTo(0,0); }
+  if (el) {
+    el.classList.add('active');
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    el.scrollTop = 0;
+  }
 }
 
 function goBackFromSignup() {
@@ -475,6 +481,11 @@ async function handleLogin() {
     btn.textContent = t.liBtn;
     btn.disabled = false;
   }
+}
+
+function handleSignOut() {
+  if (window.FB) window.FB.signOut();
+  else showScreen('screen-welcome');
 }
 
 function resendEmail() {
