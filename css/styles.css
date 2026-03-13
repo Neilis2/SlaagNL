@@ -46,8 +46,24 @@ body.rtl .btn-back { flex-direction: row-reverse; }
 body.rtl .stat-row { flex-direction: row-reverse; }
 
 /* ── Screens ── */
-.screen { display:none; min-height:100vh; flex-direction:column; position:relative; }
-.screen.active { display:flex; animation: fadeIn .3s ease; }
+.screen {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--navy);
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.screen.active {
+  display: flex;
+  animation: fadeIn .3s ease;
+}
+
 html, body { overflow-x: hidden; scroll-behavior: auto; }
 body { margin: 0; }
 
