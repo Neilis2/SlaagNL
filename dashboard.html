@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SlaagNL</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1f3c;--navy2:#162d54;--navy3:#1e3a6e;
+  --orange:#f47c3a;--cream:#fdf6ec;
+  --green:#2ecc8a;--red:#e8455a;--purple:#a78bfa;
+  --blue:#60;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+
+/* ══ HEADER ══ */
+.header{
+  background:var(--navy2);
+  border-bottom:1px solid var(--border);
+  padding:12px 20px 18px;
+  display:flex;flex-direction:column;align-items:center;
+  position:sticky;top:0;z-index:100;
+}
+.header-top{
+  width:100%;display:flex;align-items:center;
+  justify-content:space-between;margin-bottom:8px;
+}
+.streak-badge{
+  display:flex;align-items:center;gap:4px;
+  font-size:13px;font-weight:700;color:var(--orange);
+  background:rgba(244,124,58,0.12);
+  border:1px solid rgba(244,124,58,0.25);
+  padding:5px 11px;border-radius:99px;cursor:pointer;
+}
+.avatar-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),#f4c842);
+  border:2px solid rgba(244,124,58,0.35);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:white;
+  cursor:pointer;transition:transform var(--ease);
+}
+.avatar-btn:active{transform:scale(0.92);}
+
+/* Lowie + logo center */
+.header-center{display:flex;flex-direction:column;align-items:center;gap:0;}
+
+.lowie-bubble{
+  background:white;color:#1a2a4a;
+  font-size:12px;font-weight:600;
+  padding:7px 14px;
+  border-radius:16px 16px 16px 4px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.18);
+  margin-bottom:6px;position:relative;
+  max-width:260px;text-align:center;line-height:1.35;
+  transition:opacity 0.3s;
+}
+.lowie-bubble::after{
+  content:'';position:absolute;
+  bottom:-7px;left:16px;
+  border:7px solid transparent;
+  border-top-color:white;border-bottom:0;
+  border-left:5px solid transparent;
+}
+
+.lowie-img{
+  width:80px;height:80px;
+  object-fit:contain;
+  filter:drop-shadow(0 6px 16px rgba(244,124,58,0.25));
+  margin-bottom:2px;
+}
+
+.logo-text{
+  font-family:'Playfair Display',serif;
+  font-size:26px;font-weight:900;
+  color:var(--cream);letter-spacing:0.5px;line-height:1;
+}
+.logo-nl{color:var(--orange);}
+
+/* ══ HERO ══ */
+.hero{
+  background:linear-gradient(160deg,var(--navy2),var(--navy3));
+  padding:16px 20px;border-bottom:1px solid var(--border);
+}
+.gift-banner{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(244,196,58,0.07);
+  border:1px solid rgba(244,196,58,0.25);
+  border-radius:12px;padding:10px 14px;margin-bottom:14px;
+  animation:giftPulse 3s ease infinite;
+}
+@keyframes giftPulse{0%,100%{border-color:rgba(244,196,58,0.25);}50%{border-color:rgba(244,196,58,0.5);}}
+.gift-title{font-size:13px;font-weight:700;color:var(--yellow);}
+.gift-sub{font-size:11px;color:rgba(253,246,236,0.45);}
+.gift-btn{
+  margin-left:auto;padding:7px 14px;background:var(--yellow);
+  border:none;border-radius:99px;color:#1a1000;
+  font-size:12px;font-weight:700;white-space:nowrap;
+  flex-shrink:0;cursor:pointer;font-family:inherit;
+}
+.dominio-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;}
+.dominio-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(253,246,236,0.4);}
+.dominio-pct{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--orange);}
+.dominio-bar{height:7px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;margin-bottom:8px;}
+.dominio-bar-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--yellow));border-radius:10px;transition:width 0.8s ease;}
+.exam-row{font-size:12px;color:rgba(253,246,236,0.4);text-align:right;}
+.exam-row strong{color:var(--blue);}
+
+/* ══ SECTIONS ══ */
+.sections-wrap{background:var(--cream);padding-bottom:60px;}
+.section-block{padding:22px 16px 20px;border-bottom:1px solid var(--border-cream);}
+
+.section-tag{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:13px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;
+  padding:7px 16px;border-radius:99px;margin-bottom:16px;
+}
+.tag-taal   {color:#1a5fa8;background:rgba(26,95,168,0.09);border:1px solid rgba(26,95,168,0.18);}
+.tag-sam    {color:#1a7a50;background:rgba(26,122,80,0.09);border:1px solid rgba(26,122,80,0.18);}
+.tag-spreken{color:#6b35a8;background:rgba(107,53,168,0.09);border:1px solid rgba(107,53,168,0.18);}
+.tag-examen {color:#a83535;background:rgba(168,53,53,0.07);border:1px solid rgba(168,53,53,0.16);}
+
+/* ══ TOPIC OVALS ══ */
+.topics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.topic-oval{
+  background:rgba(13,31,60,0.06);
+  border:1.5px solid rgba(13,31,60,0.1);
+  border-radius:18px;
+  padding:14px 8px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:pointer;text-align:center;user-select:none;
+  transition:all 0.18s;
+}
+.topic-oval:active{transform:scale(0.96);}
+.topic-oval.done  {background:rgba(46,204,138,0.08);border-color:rgba(46,204,138,0.28);}
+.topic-oval.curr  {background:rgba(244,124,58,0.07);border-color:rgba(244,124,58,0.28);}
+.topic-oval.locked{opacity:0.45;cursor:not-allowed;}
+.topic-oval.soon  {opacity:0.52;cursor:default;}
+.topic-oval.locked:active,.topic-oval.soon:active{transform:none;}
+
+.topic-emoji{font-size:22px;line-height:1;}
+.topic-name{font-size:11.5px;font-weight:700;color:var(--navy);line-height:1.25;}
+.topic-oval.done .topic-name  {color:#1a7a50;}
+.topic-oval.curr .topic-name  {color:#b85a1a;}
+.topic-oval.locked .topic-name,
+.topic-oval.soon .topic-name  {color:rgba(13,31,60,0.4);}
+.topic-sub{font-size:10px;color:rgba(13,31,60,0.38);line-height:1.2;}
+.topic-oval.soon .topic-sub{color:var(--purple);font-weight:600;}
+
+/* ══ EXAMEN BLUR ══ */
+.examen-blur-wrap{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;}
+.examen-blur-content{filter:blur(4px);pointer-events:none;user-select:none;}
+.examen-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.examen-lock-icon{font-size:42px;}
+.unlock-info{
+  display:none;margin-top:12px;
+  background:white;border:1px solid rgba(168,53,53,0.15);
+  border-radius:14px;padding:14px 16px;text-align:center;
+}
+.unlock-info.show{display:block;}
+.unlock-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:900;color:var(--navy);margin-bottom:5px;}
+.unlock-sub{font-size:12px;color:rgba(13,31,60,0.5);line-height:1.5;margin-bottom:10px;}
+.unlock-bar-wrap{height:5px;background:rgba(13,31,60,0.08);border-radius:99px;overflow:hidden;margin-bottom:5px;}
+.unlock-bar-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--yellow));border-radius:99px;transition:width 0.6s ease;}
+.unlock-pct{font-size:11px;font-weight:700;color:rgba(13,31,60,0.4);}
+.unlock-pct span{color:var(--orange);}
+
+/* ══ TOAST ══ */
+.toast{
+  position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--navy3);border:1px solid rgba(255,255,255,0.12);
+  color:var(--cream);font-size:13px;font-weight:600;
+  padding:12px 20px;border-radius:99px;z-index:9999;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),opacity 0.35s;
+  opacity:0;white-space:nowrap;max-width:90vw;text-align:center;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* ══ DRAWER ══ */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.drawer-overlay.open{opacity:1;pointer-events:all;}
+.profile-drawer{
+  position:fixed;top:0;right:-100%;
+  width:min(340px,92vw);height:100%;
+  background:var(--navy2);border-left:1px solid var(--border);
+  z-index:300;display:flex;flex-direction:column;
+  transition:right 0.32s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;
+}
+.profile-drawer.open{right:0;}
+.drawer-header{
+  padding:50px 20px 20px;
+  background:linear-gradient(160deg,var(--navy3),var(--navy2));
+  border-bottom:1px solid var(--border);position:relative;
+}
+.drawer-close{position:absolute;top:16px;left:16px;background:none;border:none;color:rgba(253,246,236,0.4);font-size:22px;cursor:pointer;line-height:1;}
+.drawer-avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--orange),#f4c842);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:white;margin-bottom:12px;border:3px solid rgba(244,124,58,0.4);}
+.drawer-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--cream);margin-bottom:2px;}
+.drawer-email{font-size:12px;color:rgba(253,246,236,0.4);margin-bottom:8px;}
+.drawer-plan-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--orange);background:rgba(244,124,58,0.1);border:1px solid rgba(244,124,58,0.25);padding:3px 10px;border-radius:99px;}
+.drawer-menu{padding:12px 0;}
+.drawer-item{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;transition:background var(--ease);border:none;background:none;width:100%;text-align:left;font-family:inherit;color:var(--cream);}
+.drawer-item:hover{background:rgba(255,255,255,0.04);}
+.drawer-item-icon{font-size:18px;width:24px;text-align:center;}
+.drawer-item-label{font-size:14px;font-weight:500;flex:1;}
+.drawer-item-arrow{font-size:16px;color:rgba(253,246,236,0.25);}
+.drawer-divider{height:1px;background:var(--border);margin:4px 0;}
+.drawer-item.danger{color:var(--red);}
+
+/* ══ SUBPANELS ══ */
+.subpanel{position:fixed;top:0;right:-100%;width:min(340px,92vw);height:100%;background:var(--navy);border-left:1px solid var(--border);z-index:400;display:flex;flex-direction:column;transition:right 0.28s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;}
+.subpanel.open{right:0;}
+.subpanel-header{display:flex;align-items:center;gap:12px;padding:52px 20px 16px;background:var(--navy2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1;}
+.subpanel-back{background:none;border:none;color:var(--orange);font-size:22px;cursor:pointer;padding:0;line-height:1;}
+.subpanel-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--cream);}
+.subpanel-body{padding:16px 20px;flex:1;}
+
+/* Progress */
+.progress-topic-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.pt-icon{font-size:20px;width:28px;text-align:center;}
+.pt-name{font-size:13px;font-weight:600;color:var(--cream);flex:1;}
+.pt-pct{font-size:13px;font-weight:700;min-width:36px;text-align:right;}
+.progress-blur-wrap{position:relative;margin-top:4px;}
+.progress-blur-items{filter:blur(5px);pointer-events:none;user-select:none;}
+.progress-lock-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(13,31,60,0.55);border-radius:14px;padding:20px;}
+.progress-lock-overlay p{font-size:12px;font-weight:600;color:rgba(253,246,236,0.7);text-align:center;line-height:1.5;}
+.btn-upgrade{padding:9px 18px;background:var(--orange);border:none;border-radius:99px;color:white;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* Plans */
+.plan-card{background:var(--navy2);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;position:relative;}
+.plan-card.plan-current{border-color:rgba(46,204,138,0.35);}
+.plan-card.plan-featured{border-color:rgba(244,124,58,0.4);}
+.plan-badge{position:absolute;top:-10px;right:14px;background:var(--orange);color:white;font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;}
+.plan-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:900;color:var(--cream);margin-bottom:4px;}
+.plan-price{font-size:22px;font-weight:700;color:var(--orange);margin-bottom:10px;}
+.plan-price span{font-size:12px;color:rgba(253,246,236,0.4);font-weight:400;}
+.plan-features{list-style:none;margin-bottom:14px;}
+.plan-features li{font-size:12px;color:rgba(253,246,236,0.65);padding:3px 0;}
+.plan-features li.ok::before{content:'✓ ';color:var(--green);font-weight:700;}
+.plan-features li.no{color:rgba(253,246,236,0.3);}
+.plan-features li.no::before{content:'✗ ';color:var(--red);}
+.plan-btn{width:100%;padding:11px;background:var(--navy3);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:var(--cream);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all var(--ease);}
+.plan-btn:hover{border-color:var(--orange);background:rgba(244,124,58,0.1);}
+.plan-btn-current{border-color:var(--green);color:var(--green);cursor:default;}
+
+/* Settings/Form */
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+.settings-row-label{font-size:14px;font-weight:500;color:var(--cream);}
+.settings-row.danger .settings-row-label{color:var(--red);}
+.settings-arrow{color:rgba(253,246,236,0.25);font-size:16px;}
+.lang-option{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+.lang-option.active .lang-name{color:var(--orange);font-weight:700;}
+.lang-flag{font-size:22px;}.lang-name{font-size:14px;color:var(--cream);flex:1;}.lang-check{color:var(--green);font-size:16px;}
+.form-field{margin-bottom:16px;}
+.form-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(253,246,236,0.4);margin-bottom:6px;display:block;}
+.form-input{width:100%;padding:12px 14px;background:var(--navy2);border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;color:var(--cream);font-size:14px;font-family:inherit;outline:none;transition:border-color var(--ease);}
+.form-input:focus{border-color:var(--orange);}
+.btn-save{width:100%;padding:13px;background:var(--orange);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* Confirm modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:var(--navy2);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:28px 24px;width:100%;max-width:320px;text-align:center;transform:scale(0.92);transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1);}
+.modal-overlay.open .modal-box{transform:scale(1);}
+.modal-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:var(--cream);margin-bottom:8px;}
+.modal-sub{font-size:13px;color:rgba(253,246,236,0.5);margin-bottom:20px;line-height:1.5;}
+.modal-btns{display:flex;gap:10px;}
+.modal-btn{flex:1;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;border:none;}
+.modal-btn.primary{background:var(--red);color:white;}
+.modal-btn.secondary{background:rgba(255,255,255,0.06);color:var(--cream);border:1px solid var(--border);}
+
+/* Lowie modal */
+.lowie-modal{position:fixed;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);opacity:0;pointer-events:none;transition:opacity 0.25s;padding:20px;}
+.lowie-modal.open{opacity:1;pointer-events:all;}
+.lowie-modal-box{background:var(--navy2);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:32px 24px;text-align:center;max-width:300px;width:100%;transform:scale(0.85);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);}
+.lowie-modal.open .lowie-modal-box{transform:scale(1);}
+.lowie-modal-img{width:100px;height:100px;object-fit:contain;margin-bottom:4px;filter:drop-shadow(0 4px 12px rgba(244,124,58,0.3));}
+.lowie-modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--cream);margin-bottom:6px;}
+.lowie-modal-sub{font-size:13px;color:rgba(253,246,236,0.5);line-height:1.5;margin-bottom:20px;}
+.lowie-modal-btn{padding:12px 28px;background:var(--orange);border:none;border-radius:12px;color:white;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+[dir="rtl"] .profile-drawer{right:auto;left:-100%;border-left:none;border-right:1px solid var(--border);}
+[dir="rtl"] .profile-drawer.open{left:0;}
+[dir="rtl"] .subpanel{right:auto;left:-100%;border-left:none;border-right:1px solid var(--border);}
+[dir="rtl"] .subpanel.open{left:0;}
+</style>
+<script src="js/free-access.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="streak-badge" id="dash-streak">🔥 0</div>
+    <div class="avatar-btn" id="avatar-btn" onclick="openDrawer()">N</div>
+  </div>
+  <div class="header-center">
+    <div class="lowie-bubble" id="lowie-bubble">¡Hola! ¿Lista para estudiar hoy? 🦁</div>
+    <img class="lowie-img" src="assets/lowie.png" alt="Lowie" id="lowie-img">
+    <div class="logo-text">Slaag<span class="logo-nl">NL</span></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="gift-banner" id="dash-gift" style="display:none">
+    <span style="font-size:20px;flex-shrink:0;">🎁</span>
+    <div><div class="gift-title">¡1 día Premium gratis!</div><div class="gift-sub">Sin límite de ejercicios hoy</div></div>
+    <button class="gift-btn" onclick="activatePremiumDay()">Activar</button>
+  </div>
+  <div class="dominio-row">
+    <span class="dominio-label" id="dash-dominio-label">DOMINIO GENERAL</span>
+    <span class="dominio-pct" id="dash-pct">0%</span>
+  </div>
+  <div class="dominio-bar"><div class="dominio-bar-fill" id="dash-bar" style="width:0%"></div></div>
+  <div class="exam-row" id="dash-bar-msg">Examen en <strong>— días</strong></div>
+</div>
+
+<!-- SECTIONS -->
+<div class="sections-wrap">
+
+  <!-- TAAL -->
+  <div class="section-block">
+    <div class="section-tag tag-taal">📚 Taal</div>
+    <div class="topics-grid" id="grid-taal"></div>
+  </div>
+
+  <!-- SAMENLEVING -->
+  <div class="section-block">
+    <div class="section-tag tag-sam">🏛️ Samenleving</div>
+    <div class="topics-grid" id="grid-sam"></div>
+  </div>
+
+  <!-- SPREKEN -->
+  <div class="section-block">
+    <div class="section-tag tag-spreken">🗣️ Spreken</div>
+    <div class="topics-grid" id="grid-spreken"></div>
+  </div>
+
+  <!-- EXAMEN -->
+  <div class="section-block">
+    <div class="section-tag tag-examen">📋 Examen</div>
+    <div class="examen-blur-wrap" id="examen-wrap">
+      <div class="examen-blur-content">
+        <div class="topics-grid">
+          <div class="topic-oval" onclick="goExam('kns')"><div class="topic-emoji">📋</div><div class="topic-name">KNS</div><div class="topic-sub">35 preguntas</div></div>
+          <div class="topic-oval" onclick="goExam('spreken')"><div class="topic-emoji">🗣️</div><div class="topic-name">Spreken</div><div class="topic-sub">35 preguntas</div></div>
+          <div class="topic-oval" onclick="goExam('lezen')"><div class="topic-emoji">📗</div><div class="topic-name">Lezen</div><div class="topic-sub">10 textos</div></div>
+        </div>
+      </div>
+      <div class="examen-overlay"><div class="examen-lock-icon">🔒</div></div>
+    </div>
+    <div class="unlock-info" id="unlock-info">
+      <div class="unlock-title">Sección bloqueada</div>
+      <div class="unlock-sub" id="unlock-sub">Alcanza el 80% de dominio general (plan Libre), 50% con Enfocado, o activa el plan Completo para acceso inmediato.</div>
+      <div class="unlock-bar-wrap"><div class="unlock-bar-fill" id="unlock-bar" style="width:0%"></div></div>
+      <div class="unlock-pct"><span id="unlock-pct-val">0%</span> <span id="unlock-pct-of">de 80% necesario</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- LOWIE MODAL -->
+<div class="lowie-modal" id="lowie-modal">
+  <div class="lowie-modal-box">
+    <img class="lowie-modal-img" src="assets/lowie.png" alt="Lowie">
+    <div class="lowie-modal-title" id="lowie-modal-title">¡Bien hecho!</div>
+    <div class="lowie-modal-sub" id="lowie-modal-sub">Has completado el módulo.</div>
+    <button class="lowie-modal-btn" onclick="closeLowieModal()">¡Genial! 🦁</button>
+  </div>
+</div>
+
+<!-- DRAWER OVERLAY -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+
+<!-- PROFILE DRAWER -->
+<div class="profile-drawer" id="profile-drawer">
+  <div class="drawer-header">
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    <div class="drawer-avatar" id="drawer-avatar">N</div>
+    <div class="drawer-name" id="drawer-name">Usuario</div>
+    <div class="drawer-email" id="drawer-email">correo@ejemplo.com</div>
+    <div class="drawer-plan-chip">⭐ <span id="drawer-plan-label">Plan Libre</span></div>
+  </div>
+  <div class="drawer-menu">
+    <button class="drawer-item" onclick="openProgressPanel()"><span class="drawer-item-icon">📊</span><span class="drawer-item-label">Mi progreso</span><span class="drawer-item-arrow">›</span></button>
+    <button class="drawer-item" onclick="openEditPanel()"><span class="drawer-item-icon">✏️</span><span class="drawer-item-label">Editar perfil</span><span class="drawer-item-arrow">›</span></button>
+    <button class="drawer-item" onclick="openPlansPanel()"><span class="drawer-item-icon">⭐</span><span class="drawer-item-label">Planes</span><span class="drawer-item-arrow">›</span></button>
+    <div class="drawer-divider"></div>
+    <button class="drawer-item" onclick="openSettingsPanel()"><span class="drawer-item-icon">⚙️</span><span class="drawer-item-label">Configuración</span><span class="drawer-item-arrow">›</span></button>
+    <button class="drawer-item" onclick="openContactPanel()"><span class="drawer-item-icon">💬</span><span class="drawer-item-label">Contacto</span><span class="drawer-item-arrow">›</span></button>
+    <div class="drawer-divider"></div>
+    <button class="drawer-item danger" onclick="confirmLogout()"><span class="drawer-item-icon">🚪</span><span class="drawer-item-label">Cerrar sesión</span></button>
+  </div>
+</div>
+
+<!-- SUBPANEL — Progreso -->
+<div class="subpanel" id="subpanel-progress">
+  <div class="subpanel-header"><button class="subpanel-back" onclick="closeAllSubpanels()">‹</button><div class="subpanel-title">Mi progreso</div></div>
+  <div class="subpanel-body" id="progress-body"></div>
+</div>
+
+<!-- SUBPANEL — Editar -->
+<div class="subpanel" id="subpanel-edit">
+  <div class="subpanel-header"><button class="subpanel-back" onclick="closeAllSubpanels()">‹</button><div class="subpanel-title">Editar perfil</div></div>
+  <div class="subpanel-body">
+    <div class="form-field"><label class="form-label">Nombre</label><input class="form-input" id="edit-name-input" type="text"></div>
+    <div class="form-field"><label class="form-label">País de origen</label><input class="form-input" id="edit-country-input" type="text"></div>
+    <div class="form-field"><label class="form-label">Fecha del examen</label><input class="form-input" id="edit-date-input" type="date"></div>
+    <button class="btn-save" onclick="saveEditProfile()">Guardar cambios</button>
+  </div>
+</div>
+
+<!-- SUBPANEL — Planes -->
+<div class="subpanel" id="subpanel-plans">
+  <div class="subpanel-header"><button class="subpanel-back" onclick="closeAllSubpanels()">‹</button><div class="subpanel-title">Elige tu plan</div></div>
+  <div class="subpanel-body"><div id="plans-list"></div></div>
+</div>
+
+<!-- SUBPANEL — Configuración -->
+<div class="subpanel" id="subpanel-settings">
+  <div class="subpanel-header"><button class="subpanel-back" onclick="closeAllSubpanels()">‹</button><div class="subpanel-title">Configuración</div></div>
+  <div class="subpanel-body">
+    <div class="settings-row" onclick="openLangPanel()"><span class="settings-row-label">Idioma de la app</span><span class="settings-arrow">›</span></div>
+    <div class="settings-row" onclick="confirmResetProgress()"><span class="settings-row-label">Reiniciar progreso</span><span class="settings-arrow">›</span></div>
+    <div class="drawer-divider" style="margin:8px 0"></div>
+    <div class="settings-row danger" onclick="confirmDeleteAccount()"><span class="settings-row-label">Eliminar cuenta</span><span class="settings-arrow">›</span></div>
+  </div>
+</div>
+
+<!-- SUBPANEL — Idioma -->
+<div class="subpanel" id="subpanel-lang">
+  <div class="subpanel-header"><button class="subpanel-back" onclick="closeAllSubpanels()">‹</button><div class="subpanel-title">Idioma de la app</div></div>
+  <div class="subpanel-body">
+    <div class="lang-option" id="lang-es" onclick="changeLang('es')"><span class="lang-flag">🇪🇸</span><span class="lang-name">Español</span><span class="lang-check" id="check-es" style="display:none">✓</span></div>
+    <div class="lang-option" id="lang-en" onclick="changeLang('en')"><span class="lang-flag">🇬🇧</span><span class="lang-name">English</span><span class="lang-check" id="check-en" style="display:none">✓</span></div>
+    <div class="lang-option" id="lang-tr" onclick="changeLang('tr')"><span class="lang-flag">🇹🇷</span><span class="lang-name">Türkçe</span><span class="lang-check" id="check-tr" style="display:none">✓</span></div>
+    <div class="lang-option" id="lang-ar" onclick="changeLang('ar')"><span class="lang-flag">🇸🇦</span><span class="lang-name">العربية</span><span class="lang-check" id="check-ar" style="display:none">✓</span></div>
+  </div>
+</div>
+
+<!-- SUBPANEL — Contacto -->
+<div class="subpanel" id="subpanel-contact">
+  <div class="subpanel-header"><button class="subpanel-back" onclick="closeAllSubpanels()">‹</button><div class="subpanel-title">Contacto</div></div>
+  <div class="subpanel-body">
+    <p style="font-size:13px;color:rgba(253,246,236,0.55);margin-bottom:16px;">Estamos aquí para ayudarte</p>
+    <div style="background:var(--navy2);border-radius:14px;padding:16px;border:1px solid var(--border);">
+      <div style="font-size:12px;color:rgba(253,246,236,0.4);margin-bottom:6px;">Escríbenos a</div>
+      <div style="font-size:14px;font-weight:700;color:var(--orange);">hola@slaagnl.com</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal-box">
+    <div class="modal-title" id="confirm-title">¿Confirmar?</div>
+    <div class="modal-sub" id="confirm-sub"></div>
+    <div class="modal-btns">
+      <button class="modal-btn secondary" onclick="closeConfirm()">Cancelar</button>
+      <button class="modal-btn primary" id="confirm-yes">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ STATE ══
+const state = {
+  lang: localStorage.getItem('slaagnl_lang') || 'es',
+  user: {
+    name: localStorage.getItem('slaagnl_name') || 'Usuario',
+    email: localStorage.getItem('slaagnl_email') || '',
+    plan: localStorage.getItem('slaagnl_plan') || 'libre',
+    streak: parseInt(localStorage.getItem('slaagnl_streak') || '0'),
+    examDate: localStorage.getItem('slaagnl_examdate') || '',
+    premiumDaysLeft: parseInt(localStorage.getItem('slaagnl_premdays') || '1'),
+    premiumExpiry: localStorage.getItem('slaagnl_premexpiry') || null,
+    mastery: JSON.parse(localStorage.getItem('slaagnl_mastery') || 'null') || {
+      m0:0,m1:0,m2:0,m3:0,m4:0,m5:0,m6:0,m7:0,
+      s1:0,s2:0,s3:0,s4:0,s5:0,
+      sp1:0,sp2:0,sp3:0,sp4:0,
+    }
+  }
+};
+window.state = state;
+
+// ══ MODULE DATA ══
+const TAAL_MODS = [
+  {id:'m0',name:'Fundamentos',emoji:'🔤',ready:true, url:'taal/modulo-0/index.html'},
+  {id:'m1',name:'Artículos',  emoji:'📌',ready:true, url:'taal/modulo-1/index.html'},
+  {id:'m2',name:'Gramática',  emoji:'📐',ready:true, url:'taal/modulo-2/index.html'},
+  {id:'m3',name:'Números',    emoji:'🔢',ready:true, url:'taal/modulo-3/index.html'},
+  {id:'m4',name:'Descripción',emoji:'🎨',ready:false,url:null},
+  {id:'m5',name:'Verbos',     emoji:'🔄',ready:false,url:null},
+  {id:'m6',name:'Gram. avanzada',emoji:'🧠',ready:false,url:null},
+  {id:'m7',name:'Vocabulario',emoji:'📖',ready:false,url:null},
+];
+const SAM_MODS = [
+  {id:'s1',name:'Historia',     emoji:'🗺️',ready:true,url:'samenleving/modulo-1/index.html'},
+  {id:'s2',name:'Sociedad',     emoji:'🤝',ready:true,url:'samenleving/modulo-2/index.html'},
+  {id:'s3',name:'Trabajo',      emoji:'💼',ready:true,url:'samenleving/modulo-3/index.html'},
+  {id:'s4',name:'Vida práctica',emoji:'🏠',ready:false,url:null},
+  {id:'s5',name:'Inburgering',  emoji:'📋',ready:false,url:null},
+];
+const SPREKEN_MODS = [
+  {id:'sp1',name:'Presentarte',  emoji:'👤',ready:false,url:null},
+  {id:'sp2',name:'Cotidiano',    emoji:'📅',ready:false,url:null},
+  {id:'sp3',name:'Planes',       emoji:'🌟',ready:false,url:null},
+  {id:'sp4',name:'Opinión',      emoji:'💬',ready:false,url:null},
+];
+
+// ══ PLANS ══
+const PLANS_DATA = {
+  libre:{name:{es:'Libre',en:'Free',tr:'Ücretsiz',ar:'مجاني'},price:'€0',features:{es:[
+    {t:'Módulos 0 y 1 desbloqueados',ok:true},{t:'5 ejercicios por día',ok:true},
+    {t:'Audio de pronunciación',ok:true},{t:'Módulos 2-7 bloqueados',ok:false},
+    {t:'Sin simulacros',ok:false},{t:'Sin Samenleving ni Spreken',ok:false}]}},
+  enfocado:{name:{es:'Enfocado',en:'Focused',tr:'Odaklı',ar:'مركّز'},price:'€4.99',features:{es:[
+    {t:'Todo TAAL desbloqueado',ok:true},{t:'30 ejercicios por día',ok:true},
+    {t:'Audio + velocidad ajustable',ok:true},{t:'1 simulacro por semana',ok:true},
+    {t:'Progreso completo visible',ok:true},{t:'Samenleving y Spreken bloqueados',ok:false}]}},
+  completo:{name:{es:'Completo',en:'Complete',tr:'Tam',ar:'كامل'},price:'€9.99',featured:true,features:{es:[
+    {t:'TAAL + SAMENLEVING + EXAMEN + SPREKEN',ok:true},{t:'Ejercicios ilimitados',ok:true},
+    {t:'Simulacros ilimitados',ok:true},{t:'Estadísticas detalladas',ok:true},
+    {t:'Lowie te guía en cada paso 🦁',ok:true},{t:'Soporte prioritario',ok:true}]}}
+};
+
+// ══ LOWIE MESSAGES ══
+const LOWIE_MSGS = [
+  '¡Hola, {name}! ¿Lista para estudiar hoy? 🦁',
+  '¡Tú puedes, {name}! Un paso más hacia el examen. 💪',
+  '¿Sabías que en NL hay más bicicletas que personas? 🚲',
+  'Tip: practica 15 min al día, no 2 horas el domingo. 📅',
+  '¡El neerlandés tiene 3 géneros gramaticales! 🇳🇱',
+  '¡Cada lección completada te acerca al ✅ Geslaagd!',
+  'Tip: escucha radio holandesa mientras desayunas. 📻',
+  '¿Sabías que "gezellig" no tiene traducción exacta al español? 😊',
+  '¡Mantén tu racha diaria, {name}! 🔥',
+  'Tip: repite las frases en voz alta — el Spreken lo agradece. 🗣️',
+];
+let lowieIdx = 0;
+let lowieTimer = null;
+
+function updateLowieBubble() {
+  const el = document.getElementById('lowie-bubble');
+  if (!el) return;
+  el.style.opacity = '0';
+  setTimeout(() => {
+    const name = state.user.name || 'tú';
+    const msg = LOWIE_MSGS[lowieIdx % LOWIE_MSGS.length].replace(/{name}/g, name);
+    el.textContent = msg;
+    el.style.opacity = '1';
+    lowieIdx++;
+  }, 300);
+}
+
+function startLowieRotation() {
+  updateLowieBubble();
+  if (lowieTimer) clearInterval(lowieTimer);
+  lowieTimer = setInterval(updateLowieBubble, 30000);
+}
+
+// ══ HELPERS ══
+function avgMastery() {
+  const vals = Object.values(state.user.mastery || {});
+  return vals.length ? Math.round(vals.reduce((a,b) => a+b,0) / vals.length) : 0;
+}
+function calcDays() {
+  if (!state.user.examDate) return null;
+  const e = new Date(state.user.examDate), n = new Date();
+  n.setHours(0,0,0,0); e.setHours(0,0,0,0);
+  const d = Math.ceil((e - n) / 86400000);
+  return d > 0 ? d : 0;
+}
+const DISABLE_EXAMEN_LOCK_UI = true; // TEMP: lock UI disabled while plans are off — set to false to restore
+
+function goExam(target) {
+  const allowed = ['kns', 'spreken', 'lezen'];
+  if (!allowed.includes(target)) return;
+  localStorage.setItem('slaagnl_exam_target', target);
+  const accepted = localStorage.getItem('slaagnl_exam_disclaimer_accepted') === 'true';
+  window.location.href = accepted ? `examen/${target}.html` : 'examen/index.html';
+}
+
+function isPremium() {
+  if (window.SLAAGNL_DISABLE_PLANS === true) return true; // TEMP: disable plans (free access)
+  const u = state.user;
+  if (u.plan === 'completo' || u.plan === 'enfocado') return true;
+  if (u.premiumExpiry) return new Date() < new Date(u.premiumExpiry);
+  return false;
+}
+function modPct(id) { return state.user.mastery[id] ?? 0; }
+function saveState() {
+  localStorage.setItem('slaagnl_mastery', JSON.stringify(state.user.mastery));
+  localStorage.setItem('slaagnl_name', state.user.name);
+  localStorage.setItem('slaagnl_plan', state.user.plan);
+  localStorage.setItem('slaagnl_streak', state.user.streak);
+  localStorage.setItem('slaagnl_examdate', state.user.examDate || '');
+}
+
+// ══ RENDER ══
+function renderDashboard() {
+  const avg  = avgMastery();
+  const days = calcDays();
+  const init = (state.user.name || 'U').charAt(0).toUpperCase();
+
+  document.querySelectorAll('.avatar-btn,#drawer-avatar').forEach(el => el.textContent = init);
+  document.getElementById('dash-streak').textContent = '🔥 ' + (state.user.streak || 0);
+  document.getElementById('dash-pct').textContent    = avg + '%';
+  document.getElementById('dash-bar').style.width    = avg + '%';
+  if (days !== null) {
+    document.getElementById('dash-bar-msg').innerHTML = `Examen en <strong>${days} días</strong>`;
+  }
+  document.getElementById('dash-gift').style.display =
+    (state.user.premiumDaysLeft > 0 && !state.user.premiumExpiry) ? 'flex' : 'none';
+
+  document.getElementById('drawer-name').textContent  = state.user.name || '';
+  document.getElementById('drawer-email').textContent = state.user.email || '';
+  const pn = PLANS_DATA[state.user.plan || 'libre'].name[state.lang] || 'Libre';
+  document.getElementById('drawer-plan-label').textContent = 'Plan: ' + pn;
+
+  // Unlock bar
+  const threshold = state.user.plan === 'enfocado' ? 50 : isPremium() ? 0 : 80;
+  document.getElementById('unlock-bar').style.width = Math.min(avg, threshold) / (threshold || 1) * 100 + '%';
+  document.getElementById('unlock-pct-val').textContent = avg + '%';
+  document.getElementById('unlock-pct-of').textContent  = 'de ' + threshold + '% necesario';
+
+  // Check if examen lock UI should be shown — TEMP: disabled via DISABLE_EXAMEN_LOCK_UI
+  if (DISABLE_EXAMEN_LOCK_UI) {
+    const blurEl = document.querySelector('.examen-blur-content');
+    blurEl.style.filter = 'none';
+    blurEl.style.pointerEvents = 'auto';
+    document.querySelector('.examen-overlay').style.display = 'none';
+    document.getElementById('examen-wrap').style.cursor = 'default';
+    document.getElementById('unlock-info').style.display = 'none';
+  } else {
+    const examenUnlocked = isPremium() || avg >= threshold;
+    document.getElementById('examen-wrap').style.cursor = examenUnlocked ? 'default' : 'pointer';
+    document.querySelector('.examen-blur-content').style.filter = examenUnlocked ? 'none' : 'blur(4px)';
+    document.querySelector('.examen-overlay').style.display = examenUnlocked ? 'none' : 'flex';
+  }
+
+  document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
+
+  renderGrid('grid-taal',    TAAL_MODS);
+  renderGrid('grid-sam',     SAM_MODS);
+  renderGrid('grid-spreken', SPREKEN_MODS);
+}
+
+function renderGrid(containerId, mods) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  c.innerHTML = mods.map((mod, i) => {
+    const pct      = modPct(mod.id);
+    const isDone   = pct >= 80;
+    const prevDone = i === 0 || modPct(mods[i-1].id) >= 80;
+    const isCurr   = !isDone && prevDone && mod.ready;
+    const isLocked = !isDone && !isCurr && mod.ready && !isPremium();
+    const soon     = !mod.ready;
+
+    let cls = 'topic-oval';
+    if (isDone)   cls += ' done';
+    else if (isCurr)   cls += ' curr';
+    else if (isLocked) cls += ' locked';
+    else if (soon)     cls += ' soon';
+
+    const sub = soon ? 'Próx.' : `M${mod.id.toUpperCase()}`;
+
+    let fn;
+    if (soon)        fn = `showToast('¡Próximamente!')`;
+    else if (isLocked) fn = `showToast('Completa el módulo anterior al 80% primero')`;
+    else if (mod.url)  fn = `window.location.href='${mod.url}'`;
+    else               fn = `showToast('¡Próximamente!')`;
+
+    return `<div class="${cls}" onclick="${fn}">
+      <div class="topic-emoji">${mod.emoji}</div>
+      <div class="topic-name">${mod.name}</div>
+      <div class="topic-sub">${sub}</div>
+    </div>`;
+  }).join('');
+}
+
+// ══ EXAMEN UNLOCK INFO ══
+function toggleUnlock() {
+  if (DISABLE_EXAMEN_LOCK_UI) return; // TEMP: lock UI disabled
+  const avg = avgMastery();
+  const threshold = state.user.plan === 'enfocado' ? 50 : 80;
+  if (isPremium() || avg >= threshold) return;
+  document.getElementById('unlock-info').classList.toggle('show');
+}
+
+// ══ GIFT ══
+function activatePremiumDay() {
+  const e = new Date(); e.setHours(e.getHours() + 24);
+  state.user.premiumExpiry  = e.toISOString();
+  state.user.premiumDaysLeft = 0;
+  localStorage.setItem('slaagnl_premexpiry', e.toISOString());
+  localStorage.setItem('slaagnl_premdays', '0');
+  document.getElementById('dash-gift').style.display = 'none';
+  showToast('✅ Premium activo por 24h');
+  renderDashboard();
+}
+
+// ══ TOAST ══
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ══ LOWIE MODAL ══
+function showLowieModal(title, sub) {
+  document.getElementById('lowie-modal-title').textContent = title;
+  document.getElementById('lowie-modal-sub').textContent   = sub;
+  document.getElementById('lowie-modal').classList.add('open');
+}
+function closeLowieModal() {
+  document.getElementById('lowie-modal').classList.remove('open');
+}
+
+// ══ DRAWER ══
+function openDrawer()  { document.getElementById('profile-drawer').classList.add('open'); document.getElementById('drawer-overlay').classList.add('open'); }
+function closeDrawer() { document.getElementById('profile-drawer').classList.remove('open'); document.getElementById('drawer-overlay').classList.remove('open'); closeAllSubpanels(); }
+function openSubpanel(id)  { closeAllSubpanels(); document.getElementById(id)?.classList.add('open'); }
+function closeAllSubpanels() { document.querySelectorAll('.subpanel').forEach(p => p.classList.remove('open')); }
+
+// ══ PROGRESS PANEL ══
+function openProgressPanel() {
+  const allMods = [...TAAL_MODS,...SAM_MODS,...SPREKEN_MODS];
+  const FREE = 3; const prem = isPremium();
+  const row = m => {
+    const p = modPct(m.id);
+    const c = p >= 80 ? 'var(--green)' : p >= 40 ? 'var(--orange)' : 'var(--blue)';
+    return `<div class="progress-topic-row"><div class="pt-icon">${m.emoji}</div><div class="pt-name">${m.name}</div><div class="pt-pct" style="color:${c}">${p}%</div></div>`;
+  };
+  let html = allMods.slice(0, FREE).map(row).join('');
+  if (!prem) {
+    html += `<div class="progress-blur-wrap"><div class="progress-blur-items">${allMods.slice(FREE).map(row).join('')}</div>
+    <div class="progress-lock-overlay"><p>Desbloquea el progreso completo con el plan Enfocado o Completo</p>
+    <button class="btn-upgrade" onclick="openPlansPanel()">Ver planes →</button></div></div>`;
+  } else {
+    html += allMods.slice(FREE).map(row).join('');
+  }
+  document.getElementById('progress-body').innerHTML = html;
+  openSubpanel('subpanel-progress');
+}
+
+// ══ EDIT PANEL ══
+function openEditPanel() {
+  document.getElementById('edit-name-input').value    = state.user.name    || '';
+  document.getElementById('edit-country-input').value = state.user.country || '';
+  document.getElementById('edit-date-input').value    = state.user.examDate || '';
+  openSubpanel('subpanel-edit');
+}
+function saveEditProfile() {
+  const n = document.getElementById('edit-name-input').value.trim();
+  const c = document.getElementById('edit-country-input').value.trim();
+  const d = document.getElementById('edit-date-input').value;
+  if (n) state.user.name    = n;
+  if (c) state.user.country = c;
+  if (d) state.user.examDate = d;
+  saveState();
+  closeAllSubpanels();
+  renderDashboard();
+  startLowieRotation();
+  showToast('✅ Guardado');
+}
+
+// ══ PLANS PANEL ══
+function openPlansPanel() {
+  const lang = state.lang, curr = state.user.plan || 'libre';
+  document.getElementById('plans-list').innerHTML = Object.entries(PLANS_DATA).map(([id, plan]) => {
+    const isCurr = id === curr;
+    const feats  = plan.features[lang] || plan.features.es;
+    return `<div class="plan-card${isCurr?' plan-current':''}${plan.featured?' plan-featured':''}">
+      ${plan.featured?'<div class="plan-badge">⭐ Recomendado</div>':''}
+      <div class="plan-name">${plan.name[lang]||plan.name.es}</div>
+      <div class="plan-price">${plan.price}${plan.price!=='€0'?'<span>/mes</span>':''}</div>
+      <ul class="plan-features">${feats.map(f=>`<li class="${f.ok?'ok':'no'}">${f.t}</li>`).join('')}</ul>
+      <button class="plan-btn${isCurr?' plan-btn-current':''}" onclick="selectPlan('${id}')" ${isCurr?'disabled':''}>
+        ${isCurr?'Plan actual':'Seleccionar'}</button></div>`;
+  }).join('');
+  openSubpanel('subpanel-plans');
+}
+function selectPlan(id) {
+  if (id === 'libre') { state.user.plan='libre'; saveState(); closeAllSubpanels(); renderDashboard(); showToast('Plan Libre activado'); }
+  else showToast('Pagos próximamente — Stripe 🚀');
+}
+
+function openSettingsPanel() { openSubpanel('subpanel-settings'); }
+function openLangPanel()     { openSubpanel('subpanel-lang'); }
+function openContactPanel()  { openSubpanel('subpanel-contact'); }
+
+function changeLang(lang) {
+  state.lang = lang;
+  localStorage.setItem('slaagnl_lang', lang);
+  ['es','en','tr','ar'].forEach(l => {
+    const check = document.getElementById('check-'+l);
+    const opt   = document.getElementById('lang-'+l);
+    if (check) check.style.display = l === lang ? 'inline' : 'none';
+    if (opt)   opt.classList.toggle('active', l === lang);
+  });
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  closeAllSubpanels(); renderDashboard();
+}
+
+// ══ CONFIRM MODAL ══
+function showConfirm(title, sub, btnLabel, fn) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-sub').textContent   = sub;
+  document.getElementById('confirm-yes').textContent   = btnLabel;
+  document.getElementById('confirm-yes').onclick = () => { closeConfirm(); fn(); };
+  document.getElementById('confirm-modal').classList.add('open');
+}
+function closeConfirm() { document.getElementById('confirm-modal').classList.remove('open'); }
+function confirmLogout() { showConfirm('¿Cerrar sesión?','Podrás volver cuando quieras.','Cerrar sesión',()=>{ showToast('Sesión cerrada'); setTimeout(()=>window.location.href='index.html',800); }); }
+function confirmResetProgress() {
+  showConfirm('¿Reiniciar todo?','Tu progreso vuelve a 0. Tu cuenta se mantiene.','Reiniciar',()=>{
+    Object.keys(state.user.mastery).forEach(k => state.user.mastery[k] = 0);
+    state.user.streak = 0; saveState(); renderDashboard(); showToast('Progreso reiniciado ✅');
+  });
+}
+function confirmDeleteAccount() { showConfirm('¿Eliminar cuenta?','Esta acción es permanente.','Eliminar',()=>showToast('Cuenta eliminada')); }
+
+// ══ INIT ══
+window.addEventListener('DOMContentLoaded', () => {
+  changeLang(state.lang);
+  renderDashboard();
+  startLowieRotation();
+});
+</script>
+</body>
+</html>
